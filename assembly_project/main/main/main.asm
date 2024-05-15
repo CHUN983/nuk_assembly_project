@@ -29,22 +29,24 @@ include game_func.inc
 	GAME_RULE BYTE 'Rule：',0ah,0dh
 			  BYTE "The player1 is on the buttom, keyword a and d represent left and right respectively.",0ah, 0dh
 			  BYTE "The player2 is on the top, keyword j and l represent left and right respectively.",0,0ah, 0dh
-	GAME_GROUND BYTE '==================================                              ========================================',0,0ah, 0dh
+	GAME_GROUND BYTE '=====================                              =========================',0,0ah, 0dh
 	GAME_SIDE_GROUND BYTE'||',0,0ah,0dh
 
-	GAME_MID_GROUND BYTE  '--------------------------------------------------------------------------------------------------------',0,0ah, 0dh
+	GAME_MID_GROUND BYTE  '---------------------------------------------------------------------------',0,0ah, 0dh
 
 	inputChar BYTE ?
 
 	;ball pos
-	xPos_ball BYTE 50
+	xPos_ball BYTE 35
 	yPos_ball BYTE 17
 
-	player1 BYTE "*****",0
+	player BYTE "*****",0
 	;player1 pos
-	xPos_player1 BYTE 48
+	xPos_player1 BYTE 35
 	yPos_player1 BYTE 28
-	
+	;player2 pos
+	xPos_player2 BYTE 35
+	yPos_player2 BYTE 6
 
 .code
 main PROC
@@ -75,35 +77,84 @@ main PROC
 		cmp inputChar,"x"
 		je exitGame
 
+		;for player1
 		cmp inputChar,"a"
 		je moveLeft
-			
+
 		cmp inputChar,"d"
 		je moveRight
+
+		;for player2
+		cmp inputChar, "j"
+		je moveLeft
+
+		cmp inputChar, "l"
+		je moveRight
+
 
 		jmp gameloop ;防止白癡亂按其他按鈕
 
 		moveLeft:
+			;如果超過左邊邊界就停止向左
 			cmp xPos_player1, 2
-			je stop
+			jle stop
+			cmp xPos_player2, 2
+			jle stop
 
-			mov dl, xPos_player1
-			mov dh, yPos_player1
-			call UPDATE_PLAYER
-			dec xPos_player1
-			call DRAW_PLAYER
+			;確認是player1還是player2
+			cmp inputChar, 'j'
+			je player2_time_left
+
+			player1_time_left:
+				mov dl, xPos_player1
+				mov dh, yPos_player1
+				mov esi,0			;0代表向左，xPos需要減1
+				call UPDATE_PLAYER
+				mov xPos_player1, dl
+				mov yPos_player1, dh
+				jmp gameLoop
+
+
+			player2_time_left:
+				mov dl, xPos_player2
+				mov dh, yPos_player2
+				mov esi,0			;0代表向左，xPos需要減1
+				call UPDATE_PLAYER
+				mov xPos_player2, dl
+				mov yPos_player2, dh
+
 			jmp gameLoop
 
 		moveRight:
-			cmp xPos_player1, 99
-			je stop
-			
+			;超過右邊邊界就停止
+			cmp xPos_player1, SIZEOF GAME_GROUND-7
+			jge stop
+			cmp xPos_player2, SIZEOF GAME_GROUND-7
+			jge stop
 
-			mov dl, xPos_player1
-			mov dh, yPos_player1
-			call UPDATE_PLAYER
-			inc xPos_player1
-			call DRAW_PLAYER
+			;確認是player1還是player2
+			cmp inputChar, 'l'
+			je player2_time_right
+			
+			;執行各自player的位置(往右一格)
+			player1_time_right:
+				mov dl, xPos_player1
+				mov dh, yPos_player1
+				mov esi, 1			  ;1代表向右，xPos需要加1
+				call UPDATE_PLAYER
+				mov xPos_player1, dl
+				mov yPos_player1, dh
+				jmp gameloop
+
+			player2_time_right:
+				mov dl, xPos_player2
+				mov dh, yPos_player2
+				mov esi, 1			  ;1代表向右，xPos需要加1
+				call UPDATE_PLAYER
+				mov xPos_player2, dl
+				mov yPos_player2, dh
+				
+
 			jmp gameLoop
 
 	stop:
@@ -124,25 +175,6 @@ BALL PROC
 	ret
 BALL ENDP
 
-PLAYER_GROUND PROC
-	mov dl, xPos_player1
-	mov dh, yPos_player1
-	call Gotoxy
-	mov al, player1
-	call WriteChar
-
-	ret
-PLAYER_GROUND ENDP
-
-DRAW_PLAYER PROC
-	mov dl, xPos_player1
-	mov dh, yPos_player1
-	call Gotoxy
-	mov edx, OFFSET player1
-	call WriteString
-
-	ret
-DRAW_PLAYER ENDP
 
 GROUND PROC
 	;rule
@@ -186,7 +218,7 @@ GROUND PROC
 	mov bl,5
 	side2:
 		mov dh, bl
-		mov dl, 104
+		mov dl, SIZEOF GAME_MID_GROUND
 		call Gotoxy
 		inc bl
 
@@ -195,12 +227,20 @@ GROUND PROC
 		call Crlf
 		loop side2
 
-	player:
+	player_pos:
 		mov dh, yPos_player1
 		mov dl, xPos_player1
 		call Gotoxy
-		mov edx, OFFSET player1
+		mov edx, OFFSET player
 		call WriteString
+
+		mov dh, yPos_player2
+		mov dl, xPos_player2
+		call Gotoxy
+		mov edx, OFFSET player
+		call WriteString
+
+		
 
 	ret 
 GROUND ENDP
