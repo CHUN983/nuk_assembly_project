@@ -18,14 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <MASM Include="main.asm" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{93cda096-ca3a-489b-a35c-380b483f2956}</ProjectGuid>
-    <RootNamespace>main</RootNamespace>
+    <ProjectGuid>{00c63b3e-42a9-4daa-a98e-c098df40d67f}</ProjectGuid>
+    <RootNamespace>mylib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -85,7 +82,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\irvine</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Irvine32.lib;game_func.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Irvine32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <MASM>
       <IncludePaths>C:\irvine</IncludePaths>
@@ -106,7 +103,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\irvine</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Irvine32.lib;game_func.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Irvine32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <MASM>
       <IncludePaths>C:\irvine</IncludePaths>
@@ -140,6 +137,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <MASM Include="mylib.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mylib.inc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />

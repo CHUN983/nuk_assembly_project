@@ -1,0 +1,3 @@
+﻿  Assembling mylib.asm...
+LINK : error LNK2001: 無法解析的外部符號 _mainCRTStartup
+C:\sunthing\assembly\mylib\Debug\mylib.exe : fatal error LNK1120: 1 個無法解析的外部符號
