@@ -1,0 +1,116 @@
+<mxfile host="app.diagrams.net" modified="2024-05-22T08:06:17.114Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="XH0Wzp2WWAkpkeDiO57a" version="24.4.4" type="github">
+  <diagram name="Page-1" id="fRFBAp2FJAGGFOrt1j17">
+    <mxGraphModel dx="875" dy="471" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="KAFOnqnanLpudtP8_fwG-33" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;遊戲畫面&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="242.51" y="780" width="227.49" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-2" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;開始介面&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="242.51" y="140" width="227.5" height="288.75" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-12" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="KAFOnqnanLpudtP8_fwG-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="270" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-13" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KAFOnqnanLpudtP8_fwG-1" target="KAFOnqnanLpudtP8_fwG-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-14" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KAFOnqnanLpudtP8_fwG-1" target="KAFOnqnanLpudtP8_fwG-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KAFOnqnanLpudtP8_fwG-1" target="KAFOnqnanLpudtP8_fwG-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-1" value="Player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="240" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-6" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;選擇介面&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="242.51" y="460" width="227.5" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-8" value="輸入player2&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;名字&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="296.25" y="240" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-9" value="輸入player1 名字" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="296.25" y="190" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="KAFOnqnanLpudtP8_fwG-10" target="KAFOnqnanLpudtP8_fwG-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-10" value="按C進入選擇畫面" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="289.38" y="360" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-11" value="按X退出遊戲" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="296.25" y="300" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-28" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="lvF6_4PotguvGT_02k-U-1" target="KAFOnqnanLpudtP8_fwG-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-30" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="lvF6_4PotguvGT_02k-U-1" target="KAFOnqnanLpudtP8_fwG-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-32" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="lvF6_4PotguvGT_02k-U-1" target="KAFOnqnanLpudtP8_fwG-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lvF6_4PotguvGT_02k-U-1" value="Player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="550" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-37" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="lvF6_4PotguvGT_02k-U-2" target="KAFOnqnanLpudtP8_fwG-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-41" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="lvF6_4PotguvGT_02k-U-2" target="KAFOnqnanLpudtP8_fwG-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-44" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="lvF6_4PotguvGT_02k-U-2" target="KAFOnqnanLpudtP8_fwG-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lvF6_4PotguvGT_02k-U-2" value="Player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="860" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-18" value="選擇關卡" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="291" y="510" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-21" value="選擇困難度" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="289.38" y="570" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-23" value="回首業" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="289.38" y="627.5" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="KAFOnqnanLpudtP8_fwG-26" target="KAFOnqnanLpudtP8_fwG-33">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="740" />
+              <mxPoint x="356" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-26" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;遊戲說明&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="570" y="492.5" width="160" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.007;entryY=0.212;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="KAFOnqnanLpudtP8_fwG-18" target="KAFOnqnanLpudtP8_fwG-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-31" value="按enter開始遊戲" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="583.13" y="570" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-35" value="重新開始" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="289.38" y="950" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-36" value="player1 移動" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="291" y="830" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-39" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.013;entryY=0.65;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" edge="1" parent="1" source="lvF6_4PotguvGT_02k-U-2" target="KAFOnqnanLpudtP8_fwG-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-40" value="player2 移動" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="289.38" y="890" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KAFOnqnanLpudtP8_fwG-42" value="回首頁" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="289.38" y="1010" width="133.75" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

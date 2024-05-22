@@ -11,7 +11,7 @@ include game_func.inc
 	GAME_START_STR BYTE '  ',0ah,0dh
 	  BYTE   '                ====================================================',0ah,0dh
 	  BYTE   '               ||                                                  ||',0ah,0dh                                        
-	  BYTE   '               ||            *    uuuuu uu uuuuu      *            ||',0ah,0dh
+	  BYTE   '               ||            *   uuuuuu uu uuuuuu     *            ||',0ah,0dh
 	  BYTE   '               ||                                                  ||',0ah,0dh
 	  BYTE   '               ||--------------------------------------------------||',0ah,0dh
 	  BYTE   '               ||                                                  ||',0ah,0dh

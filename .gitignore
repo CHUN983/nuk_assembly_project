@@ -1,5 +1,4 @@
+assembly_learning/
 .vs/
-mylib/.vs/
-assembly_project/main/Debug/
-assembly_project/main/main/Debug/
-assembly_project/main/.vs/
+mylib\.vs\mylib\v17\Browse.VC.db
+assembly_project\main\.vs\main\v17\Browse.VC.db
