@@ -1,5 +1,5 @@
 .vs/
-mylib/.vs/
-assembly_project/main/Debug/
-assembly_project/main/main/Debug/
-assembly_project/main/.vs/
+mylib/.vs/*.log
+assembly_project/main/Debug/*.log
+assembly_project/main/main/Debug/*.log
+assembly_project/main/.vs/*.log
