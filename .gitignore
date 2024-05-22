@@ -1,2 +1,3 @@
-.vs
-mylib\.vs
+.vs/
+mylib/.vs/
+assembly_project/main/Debug/
