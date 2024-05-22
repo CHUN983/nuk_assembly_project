@@ -1,2 +1,6 @@
 ﻿  Assembling main.asm...
-  main.vcxproj -> C:\sunthing\assembly\assembly_project\main\Debug\main.exe
+<<<<<<< HEAD
+  main.vcxproj -> C:\gitproject\nuk_assembly_project\assembly_project\main\Debug\main.exe
+=======
+  main.vcxproj -> D:\Code\school_programe_class\ASM\nuk_assembly_project\assembly_project\main\Debug\main.exe
+>>>>>>> c57892c4fd75777fb49034ceedb518b258e0a426
