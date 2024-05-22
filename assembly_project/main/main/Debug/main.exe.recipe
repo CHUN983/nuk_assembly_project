@@ -2,11 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-<<<<<<< HEAD
       <FullPath>C:\gitproject\nuk_assembly_project\assembly_project\main\Debug\main.exe</FullPath>
-=======
-      <FullPath>D:\Code\school_programe_class\ASM\nuk_assembly_project\assembly_project\main\Debug\main.exe</FullPath>
->>>>>>> c57892c4fd75777fb49034ceedb518b258e0a426
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
