@@ -63,7 +63,7 @@ VK_SPACEBAR	EQU		000000020h
 	yPos_player2 BYTE 6
 
 	;信號，決定哪個可以動
-	semaphore BYTE 0001b
+	semaphore BYTE 0
 
 .code
 main PROC
@@ -94,9 +94,10 @@ main PROC
 		.IF ah
 			jmp exitGame
 		.ENDIF
-
+		mov eax,3
+		call delay
 		;依順序決定player1或player2，類似做context switch的概念
-		XOR semaphore, 0001b
+		not semaphore
 		
 		;get user input
 		.IF semaphore==0
@@ -106,8 +107,8 @@ main PROC
 			INVOKE GetKeyState, VK_A
 			.IF ah
 				mov inputChar,"a"
-				mov eax,60
-				call delay
+				;mov eax,3
+				;call delay
 				mov al, "a"
 				jmp moveLeft
 
@@ -116,15 +117,15 @@ main PROC
 			INVOKE GetKeyState, VK_D
 			.IF ah
 				mov inputChar,"d"
-				mov eax,60
-				call delay
+				;mov eax,3
+				;call delay
 				mov al, "d"
-				je moveRight
+				jmp moveRight
 			.ENDIF
 
 		.ENDIF
 
-		.IF semaphore==1
+		.IF semaphore == 0FFh
 
 		;for player2
 			mov ah, 0
@@ -132,20 +133,21 @@ main PROC
 			INVOKE GetKeyState, VK_LEFT
 			.IF ah
 				mov inputChar, "j"
-				mov eax,60
-				call delay
+				;mov eax,2
+				;call delay
 				mov al, "j"
-				je moveLeft
+				jmp moveLeft
 			.ENDIF
 
 			INVOKE GetKeyState, VK_RIGHT
 			.IF ah
 				mov inputChar, "l"
-				mov eax,60
-				call delay
+				;mov eax,2
+				;call delay
 				mov al, "l"
-				je moveright
+				jmp moveright
 			.ENDIF
+
 
 		.ENDIF
 
