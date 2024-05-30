@@ -1,3 +1,2 @@
 ﻿  Assembling main.asm...
-  LINK : 最後的累加連結找不到或未建置 C:\gitproject\nuk_assembly_project\assembly_project\main\Debug\main.exe，正在執行完整連結
-  main.vcxproj -> C:\gitproject\nuk_assembly_project\assembly_project\main\Debug\main.exe
+  main.vcxproj -> C:\sunthing\assembly\assembly_project\main\Debug\main.exe

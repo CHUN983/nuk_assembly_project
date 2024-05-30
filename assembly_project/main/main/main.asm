@@ -1,5 +1,19 @@
 include game_func.inc
 
+GetKeyState PROTO, nVirtkey:DWORD ; Get keyboard inputs
+
+VK_LEFT		EQU		000000025h
+VK_UP		EQU		000000026h
+VK_RIGHT	EQU		000000027h
+VK_DOWN		EQU		000000028h
+VK_W		EQU		000000057h
+VK_A		EQU		000000041h
+VK_S		EQU		000000053h
+VK_D		EQU		000000044h
+VK_X		EQU		000000058h
+VK_ENTER	EQU		00000000Dh
+VK_SPACEBAR	EQU		000000020h
+
 .data
 	;START PHOTO DATA
 		StartWidth EQU 301
@@ -48,6 +62,9 @@ include game_func.inc
 	xPos_player2 BYTE 35
 	yPos_player2 BYTE 6
 
+	;信號，決定哪個可以動
+	semaphore BYTE 0001b
+
 .code
 main PROC
 
@@ -67,45 +84,84 @@ main PROC
 		call GROUND
 		call BALL
 
-	gameLoop:
 
-	
+
+	gameLoop:	
+
+		;取消是最高優先序	
+		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
+		INVOKE GetKeyState, VK_X
+		.IF ah
+			jmp exitGame
+		.ENDIF
+
+		;依順序決定player1或player2，類似做context switch的概念
+		XOR semaphore, 0001b
+		
 		;get user input
-		call ReadChar
-		mov inputChar, al
+		.IF semaphore==0
 
-		cmp inputChar,"x"
-		je exitGame
+			;for player1
+			mov ah, 0
+			INVOKE GetKeyState, VK_A
+			.IF ah
+				mov inputChar,"a"
+				mov eax,60
+				call delay
+				mov al, "a"
+				jmp moveLeft
 
-		;for player1
-		cmp inputChar,"a"
-		je moveLeft
+			.ENDIF
 
-		cmp inputChar,"d"
-		je moveRight
+			INVOKE GetKeyState, VK_D
+			.IF ah
+				mov inputChar,"d"
+				mov eax,60
+				call delay
+				mov al, "d"
+				je moveRight
+			.ENDIF
+
+		.ENDIF
+
+		.IF semaphore==1
 
 		;for player2
-		cmp inputChar, "j"
-		je moveLeft
+			mov ah, 0
 
-		cmp inputChar, "l"
-		je moveRight
+			INVOKE GetKeyState, VK_LEFT
+			.IF ah
+				mov inputChar, "j"
+				mov eax,60
+				call delay
+				mov al, "j"
+				je moveLeft
+			.ENDIF
 
+			INVOKE GetKeyState, VK_RIGHT
+			.IF ah
+				mov inputChar, "l"
+				mov eax,60
+				call delay
+				mov al, "l"
+				je moveright
+			.ENDIF
+
+		.ENDIF
 
 		jmp gameloop ;防止白癡亂按其他按鈕
 
 		moveLeft:
-			;如果超過左邊邊界就停止向左
-			cmp xPos_player1, 2
-			jle stop
-			cmp xPos_player2, 2
-			jle stop
 
 			;確認是player1還是player2
 			cmp inputChar, 'j'
 			je player2_time_left
 
 			player1_time_left:
+				;先看看有沒有超過邊界，有的話直接跳
+				cmp xPos_player1, 2
+				jle stop
+
 				mov dl, xPos_player1
 				mov dh, yPos_player1
 				mov esi,0			;0代表向左，xPos需要減1
@@ -116,6 +172,10 @@ main PROC
 
 
 			player2_time_left:
+				;先看看有沒有超過邊界，有的話直接跳
+				cmp xPos_player2, 2
+				jle stop
+
 				mov dl, xPos_player2
 				mov dh, yPos_player2
 				mov esi,0			;0代表向左，xPos需要減1
@@ -126,11 +186,7 @@ main PROC
 			jmp gameLoop
 
 		moveRight:
-			;超過右邊邊界就停止
-			cmp xPos_player1, SIZEOF GAME_GROUND-7
-			jge stop
-			cmp xPos_player2, SIZEOF GAME_GROUND-7
-			jge stop
+
 
 			;確認是player1還是player2
 			cmp inputChar, 'l'
@@ -138,6 +194,10 @@ main PROC
 			
 			;執行各自player的位置(往右一格)
 			player1_time_right:
+				;先看看有沒有超過邊界，有的話直接跳
+				cmp xPos_player1, SIZEOF GAME_GROUND-7
+				jge stop
+
 				mov dl, xPos_player1
 				mov dh, yPos_player1
 				mov esi, 1			  ;1代表向右，xPos需要加1
@@ -147,6 +207,10 @@ main PROC
 				jmp gameloop
 
 			player2_time_right:
+				;先看看有沒有超過邊界，有的話直接跳
+				cmp xPos_player2, SIZEOF GAME_GROUND-7
+				jge stop
+
 				mov dl, xPos_player2
 				mov dh, yPos_player2
 				mov esi, 1			  ;1代表向右，xPos需要加1
