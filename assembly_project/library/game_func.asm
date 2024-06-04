@@ -176,14 +176,21 @@ BALL_MOVE PROC
 		player:
 		;計算是否碰到player
 			.IF dh >= 28
-				mov ebx, [ebp+16]
+				mov ebx, [ebp+16]				;x_Pos
 				and ebx, 00FFh
 				.IF dl >= bl 
 					add bl, 4
 					.IF dl <= bl
 						mov dh, 27
 						mov esi, 1
-						mov WORD PTR [ebp+12], 0
+						mov WORD PTR [ebp+12], 0 ;path
+						mov bl,BYTE PTR [ebp+20]
+						.IF bl=='a'
+							mov WORD PTR [ebp+12], 3
+						.ENDIF
+						.IF bl=='d'
+							mov WORD PTR [ebp+12], 2
+						.ENDIF
 					.ENDIF
 				.ENDIF
 			.ENDIF
@@ -197,6 +204,13 @@ BALL_MOVE PROC
 						mov dh, 7
 						mov esi, 1
 						mov WORD PTR [ebp+12], 0
+						mov bl, BYTE PTR [ebp+20]
+						.IF bl=='j'
+							mov WORD PTR [ebp+12], 3
+						.ENDIF
+						.IF bl=='l'
+							mov WORD PTR [ebp+12], 2
+						.ENDIF
 					.ENDIF
 				.ENDIF
 			.ENDIF
@@ -223,8 +237,8 @@ BALL_MOVE PROC
 				mov esi, 1
 				mov WORD PTR [ebp+12], 1
 			.ENDIF
-			.IF dl <= 20
-				mov dl, 21
+			.IF dl <= 21
+				mov dl, 22
 				mov esi,1
 				mov WORD PTR [ebp+12], 1
 			.ENDIF
@@ -236,4 +250,335 @@ BALL_MOVE PROC
 	ret
 BALL_MOVE ENDP
 
+;---------------------------------------------------------------------------
+;當球碰到牆壁或player時，判斷他的撞擊狀態是什麼(ex.橫向牆壁，直向牆壁)，
+;並依不同時候相對應的狀態變化
+;receivers:eax, ebp
+;return: eax，state也會跟著變([ebp+12])
+;require: 需要先引入path跟state，最後要用pop的方式把值存回path跟state
+BALL_STATE PROC
+;----------------------------------------------------------------------------
+	push ebp
+	mov ebp, esp
+	;判斷板子往右還是往左還是沒動
+	mov eax, [ebp+12]			 ;mov eax, path
+	cmp eax, 0
+	je PATH_0
+	cmp eax, 1
+	je PATH_1
+	cmp eax, 2
+	je PATH_2
+	cmp eax, 3
+	je PATH_3
+	jmp CONTINUE
+
+	PATH_0:    ; 如果是?向靜止
+		mov eax, [ebp+8]	  ;mov eax, state
+		cmp eax, 1
+		je STATE_1_0
+		cmp eax, 2
+		je STATE_2_0
+		cmp eax, 3
+		je STATE_3_0
+		cmp eax, 4
+		je STATE_4_0
+		cmp eax, 5
+		je STATE_5_0
+		cmp eax, 6
+		je STATE_6_0
+		cmp eax, 7
+		je STATE_7_0
+		cmp eax, 8
+		je STATE_8_0
+		cmp eax, 9
+		je STATE_9_0
+		cmp eax, 10
+		je STATE_10_0
+		cmp eax, 11
+		je STATE_11_0
+		cmp eax, 12
+		je STATE_12_0
+		cmp eax, 13
+		je STATE_13_0
+		cmp eax, 14
+		je STATE_14_0
+		jmp CONTINUE
+
+	STATE_1_0:
+		mov eax, 8
+		jmp CONTINUE
+	STATE_2_0:
+		mov eax, 9
+		jmp CONTINUE
+	STATE_3_0:
+		mov eax, 10
+		jmp CONTINUE
+	STATE_4_0:
+		mov eax, 11
+		jmp CONTINUE
+	STATE_5_0:
+		mov eax, 12
+		jmp CONTINUE
+	STATE_6_0:
+		mov eax, 13
+		jmp CONTINUE
+	STATE_7_0:
+		mov eax, 14
+		jmp CONTINUE
+	STATE_8_0:
+		mov eax, 1
+		jmp CONTINUE
+	STATE_9_0:
+		mov eax, 2
+		jmp CONTINUE
+	STATE_10_0:
+		mov eax, 3
+		jmp CONTINUE
+	STATE_11_0:
+		mov eax, 4
+		jmp CONTINUE
+	STATE_12_0:
+		mov eax, 5
+		jmp CONTINUE
+	STATE_13_0:
+		mov eax, 6
+		jmp CONTINUE
+	STATE_14_0:
+		mov eax, 7
+		jmp CONTINUE
+
+	PATH_1:    ; 如果是直向靜止
+		mov eax, [ebp+8]
+		cmp eax, 1
+		je STATE_1_1
+		cmp eax, 2
+		je STATE_2_1
+		cmp eax, 3
+		je STATE_3_1
+		cmp eax, 4
+		je STATE_4_1
+		cmp eax, 5
+		je STATE_5_1
+		cmp eax, 6
+		je STATE_6_1
+		cmp eax, 7
+		je STATE_7_1
+		cmp eax, 8
+		je STATE_8_1
+		cmp eax, 9
+		je STATE_9_1
+		cmp eax, 10
+		je STATE_10_1
+		cmp eax, 11
+		je STATE_11_1
+		cmp eax, 12
+		je STATE_12_1
+		cmp eax, 13
+		je STATE_13_1
+		cmp eax, 14
+		je STATE_14_1
+		jmp CONTINUE
+
+	STATE_1_1:
+		mov eax, 8
+		jmp CONTINUE
+	STATE_2_1:
+		mov eax, 5
+		jmp CONTINUE
+	STATE_3_1:
+		mov eax, 6
+		jmp CONTINUE
+	STATE_4_1:
+		mov eax, 7
+		jmp CONTINUE
+	STATE_5_1:
+		mov eax, 2
+		jmp CONTINUE
+	STATE_6_1:
+		mov eax, 3
+		jmp CONTINUE
+	STATE_7_1:
+		mov eax, 4
+		jmp CONTINUE
+	STATE_8_1:
+		mov eax, 1
+		jmp CONTINUE
+	STATE_9_1:
+		mov eax, 12
+		jmp CONTINUE
+	STATE_10_1:
+		mov eax, 13
+		jmp CONTINUE
+	STATE_11_1:
+		mov eax, 14
+		jmp CONTINUE
+	STATE_12_1:
+		mov eax, 9
+		jmp CONTINUE
+	STATE_13_1:
+		mov eax, 10
+		jmp CONTINUE
+	STATE_14_1:
+		mov eax, 11
+		jmp CONTINUE
+
+	PATH_2:    ; 如果是?向右移
+		mov eax, [ebp+8]
+		cmp eax, 1
+		je STATE_1_2
+		cmp eax, 2
+		je STATE_2_2
+		cmp eax, 3
+		je STATE_3_2
+		cmp eax, 4
+		je STATE_4_2
+		cmp eax, 5
+		je STATE_5_2
+		cmp eax, 6
+		je STATE_6_2
+		cmp eax, 7
+		je STATE_7_2
+		cmp eax, 8
+		je STATE_8_2
+		cmp eax, 9
+		je STATE_9_2
+		cmp eax, 10
+		je STATE_10_2
+		cmp eax, 11
+		je STATE_11_2
+		cmp eax, 12
+		je STATE_12_2
+		cmp eax, 13
+		je STATE_13_2
+		cmp eax, 14
+		je STATE_14_2
+		jmp CONTINUE
+
+	STATE_1_2:
+		mov eax, 9
+		jmp CONTINUE
+	STATE_2_2:
+		mov eax, 8
+		jmp CONTINUE
+	STATE_3_2:
+		mov eax, 12
+		jmp CONTINUE
+	STATE_4_2:
+		mov eax, 13
+		jmp CONTINUE
+	STATE_5_2:
+		mov eax, 10
+		jmp CONTINUE
+	STATE_6_2:
+		mov eax, 11
+		jmp CONTINUE
+	STATE_7_2:
+		mov eax, 11
+		jmp CONTINUE
+	STATE_8_2:
+		mov eax, 2
+		jmp CONTINUE
+	STATE_9_2:
+		mov eax, 1
+		jmp CONTINUE
+	STATE_10_2:
+		mov eax, 5
+		jmp CONTINUE
+	STATE_11_2:
+		mov eax, 6
+		jmp CONTINUE
+	STATE_12_2:
+		mov eax, 3
+		jmp CONTINUE
+	STATE_13_2:
+		mov eax, 4
+		jmp CONTINUE
+	STATE_14_2:
+		mov eax, 4
+		jmp CONTINUE
+
+	PATH_3:    ;如果是?向左移
+		mov eax, [ebp+8]
+		cmp eax, 1
+		je STATE_1_3
+		cmp eax, 2
+		je STATE_2_3
+		cmp eax, 3
+		je STATE_3_3
+		cmp eax, 4
+		je STATE_4_3
+		cmp eax, 5
+		je STATE_5_3
+		cmp eax, 6
+		je STATE_6_3
+		cmp eax, 7
+		je STATE_7_3
+		cmp eax, 8
+		je STATE_8_3
+		cmp eax, 9
+		je STATE_9_3
+		cmp eax, 10
+		je STATE_10_3
+		cmp eax, 11
+		je STATE_11_3
+		cmp eax, 12
+		je STATE_12_3
+		cmp eax, 13
+		je STATE_13_3
+		cmp eax, 14
+		je STATE_14_3
+		jmp CONTINUE
+
+	STATE_1_3:
+		mov eax, 12
+		jmp CONTINUE
+	STATE_2_3:
+		mov eax, 13
+		jmp CONTINUE
+	STATE_3_3:
+		mov eax, 14
+		jmp CONTINUE
+	STATE_4_3:
+		mov eax, 14
+		jmp CONTINUE
+	STATE_5_3:
+		mov eax, 8
+		jmp CONTINUE
+	STATE_6_3:
+		mov eax, 9
+		jmp CONTINUE
+	STATE_7_3:
+		mov eax, 10
+		jmp CONTINUE
+	STATE_8_3:
+		mov eax, 5
+		jmp CONTINUE
+	STATE_9_3:
+		mov eax, 6
+		jmp CONTINUE
+	STATE_10_3:
+		mov eax, 7
+		jmp CONTINUE
+	STATE_11_3:
+		mov eax, 7
+		jmp CONTINUE
+	STATE_12_3:
+		mov eax, 1
+		jmp CONTINUE
+	STATE_13_3:
+		mov eax, 2
+		jmp CONTINUE
+	STATE_14_3:
+		mov eax, 3
+		jmp CONTINUE
+
+	CONTINUE:
+		mov [ebp+8], eax
+
+	pop ebp
+ret
+BALL_STATE ENDP
+
+
 END
+

@@ -5,3 +5,4 @@ INCLUDE Irvine32.inc
 ;--------------------------------------------
 UPDATE_PLAYER PROTO ;讓腳色移動
 BALL_MOVE PROTO ;讓球移動
+BALL_STATE PROTO ;讓球遇到牆壁會PLAYER做變化
