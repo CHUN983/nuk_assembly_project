@@ -73,13 +73,13 @@ VK_SPACEBAR	EQU		000000020h
 	yPos_player2 BYTE 6
 
 
-	;??????????
+	;信號，決定哪個可以動
 	semaphore BYTE 0
-	;????????20????????????ball
+	;時間戳記，每經過20次的信號處理需要處理一此ball
 	tamp WORD 20
 
 
-	;?????data----------------------------------------------------------------------------
+	;球所需要的data----------------------------------------------------------------------------
 
 	;ball pos
 	xPos_ball BYTE 50
@@ -87,11 +87,11 @@ VK_SPACEBAR	EQU		000000020h
 
 	state DWORD 1
 	hit_wall DWORD 0
-	path DWORD 0    ;?????????????? 
-									;????=0 ????????
-									;????=1 ??????
-									;??=2     ?????????????
-									;??=3     ?????????????
+	path DWORD 0    ;板子正在右移，左移，還是靜止 
+									;橫向靜止=0 同時改變上下左右
+									;直向靜止=1 只會改變左右
+									;右移=2     改變上下左右的同時改變速度
+									;左移=3     改變上下左右的同時改變速度
 	;-------------------------------------------------------------------------------------------
 
 	word_test Dword 0
@@ -105,7 +105,7 @@ main PROC
 		call ReadChar
 		mov inputChar, al
 		cmp inputChar, "c"
-		je game
+		je menu
 		
 	jmp homeLoop
     menu:
@@ -135,11 +135,10 @@ main PROC
 		call BALL
 
 
-
 	gameLoop:	
 
-		;????????	
-		mov ah, 0 ;ah?0?getkeystate??????
+		;取消是最高優先序	
+		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
 		INVOKE GetKeyState, VK_X
 		.IF ah
 			jmp exitGame
@@ -155,7 +154,7 @@ main PROC
 			mov dh, yPos_ball
 			call UPDATE_BALL
 
-			;?ball?????????
+			;當ball沒被接住時結束遊戲
 			.IF yPos_ball<6 || yPos_ball > 28
 				.IF xPos_ball > 42 && xPos_ball < 62
 					jmp GAME_STOP
@@ -163,7 +162,7 @@ main PROC
 			.ENDIF
 		.ENDIF
 
-		;?????player1?player2????context switch???
+		;依順序決定player1或player2，類似做context switch的概念
 		not semaphore
 		
 		;get user input
@@ -217,22 +216,22 @@ main PROC
 
 
 
-		jmp gameloop ;??????????
+		jmp gameloop ;防止白癡亂按其他按鈕
 
 		moveLeft:
 
-			;???player1??player2
+			;確認是player1還是player2
 			cmp inputChar, 'j'
 			je player2_time_left
 
 			player1_time_left:
-				;?????????????????
+				;先看看有沒有超過邊界，有的話直接跳
 				cmp xPos_player1, 22
 				jle stop
 
 				mov dl, xPos_player1
 				mov dh, yPos_player1
-				mov esi,0			;0?????xPos???1
+				mov esi,0			;0代表向左，xPos需要減1
 				call UPDATE_PLAYER
 				mov xPos_player1, dl
 				mov yPos_player1, dh
@@ -240,13 +239,13 @@ main PROC
 
 
 			player2_time_left:
-				;?????????????????
+				;先看看有沒有超過邊界，有的話直接跳
 				cmp xPos_player2, 22
 				jle stop
 
 				mov dl, xPos_player2
 				mov dh, yPos_player2
-				mov esi,0			;0?????xPos???1
+				mov esi,0			;0代表向左，xPos需要減1
 				call UPDATE_PLAYER
 				mov xPos_player2, dl
 				mov yPos_player2, dh
@@ -256,32 +255,32 @@ main PROC
 		moveRight:
 
 
-			;???player1??player2
+			;確認是player1還是player2
 			cmp inputChar, 'l'
 			je player2_time_right
 			
-			;????player???(????)
+			;執行各自player的位置(往右一格)
 			player1_time_right:
-				;?????????????????
+				;先看看有沒有超過邊界，有的話直接跳
 				cmp xPos_player1, SIZEOF GAME_GROUND+14
 				jge stop
 
 				mov dl, xPos_player1
 				mov dh, yPos_player1
-				mov esi, 1			  ;1?????xPos???1
+				mov esi, 1			  ;1代表向右，xPos需要加1
 				call UPDATE_PLAYER
 				mov xPos_player1, dl
 				mov yPos_player1, dh
 				jmp gameloop
 
 			player2_time_right:
-				;?????????????????
+				;先看看有沒有超過邊界，有的話直接跳
 				cmp xPos_player2, SIZEOF GAME_GROUND+14
 				jge stop
 
 				mov dl, xPos_player2
 				mov dh, yPos_player2
-				mov esi, 1			  ;1?????xPos???1
+				mov esi, 1			  ;1代表向右，xPos需要加1
 				call UPDATE_PLAYER
 				mov xPos_player2, dl
 				mov yPos_player2, dh
@@ -293,10 +292,10 @@ main PROC
 		jmp gameLoop
 
 	GAME_STOP:
-		mov ah, 0 ;ah?0?getkeystate??????
+		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
 		INVOKE GetKeyState, VK_SPACE
 		.IF ah
-			;?????????
+			;重製球的位置與狀態
 			mov dl, xPos_ball
 			mov dh, yPos_ball
 			call Gotoxy
@@ -306,7 +305,7 @@ main PROC
 			call Ball
 			mov state, 1
 
-			;??player???
+			;重製player的位置
 			mov dl, xPos_player1
 			mov dh, yPos_player1
 			call Gotoxy
@@ -372,9 +371,6 @@ GameRuleUI PROC
 GameRuleUI ENDP
 
 GROUND PROC
-	;rule
-	mov edx, OFFSET GAME_RULE
-	call WriteString
 	
 	;draw ground button and top (height:0~24, width: 1~?)
 	mov dl, 22
@@ -443,7 +439,7 @@ UPDATE_BALL PROC
 	
 	push eax
 
-	;??dl??????????????" "?"-"
+	;假設dl已經在目前球的位置，先清除為" "或"-"
 	call Gotoxy
 	mov al," "
 	.IF dh==17
@@ -457,7 +453,7 @@ UPDATE_BALL PROC
 	.ENDIF
 	call WriteChar
 
-	;????????,eax??state??????hit
+	;往既定的方向移動,eax儲存state，並判斷是否hit
 	mov esi, 0
 	mov eax, state
 	mov dl, xPos_ball
@@ -473,7 +469,7 @@ UPDATE_BALL PROC
 	call BALL_MOVE
 
 	pop path
-	;xPos_player??????esp??????????player1??player2
+	;xPos_player沒變，直接把esp一回去就好，不用再是player1還是player2
 	add esp, 8
 
 	mov hit_wall,esi
@@ -481,18 +477,18 @@ UPDATE_BALL PROC
 	mov yPos_ball, dh
 
 
-	;??hit?????????
+	;沒有hit的話照既定方向移動
 	call Gotoxy
 	mov ax, "@"
 	call WriteChar
 
-	;?hit??????????????
+	;有hit的話先改變運動方向，然後移動
 	.IF hit_wall==1
 
-		;?state??????????????????path
+		;改state的值，目的修改球的移動方向，最後存回path
 		push path
 		push state
-		call BALL_STATE		;notion?????
+		call BALL_STATE		;notion上面一段的
 		pop state
 		pop path
 
