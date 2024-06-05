@@ -1,5 +1,12 @@
 assembly_learning/
 .vs/
 mylib\.vs\mylib\v17\Browse.VC.db
-assembly_project\main\.vs\main\v17\Browse.VC.db
+assembly_project/main/.vs/main/v17/.suo
+assembly_project/main/Debug/main.exe
 assembly_project/main/.vs/main/v17/Browse.VC.db
+assembly_project/main/Debug/main.pdb
+assembly_project/main/main/Debug/main.ilk
+assembly_project/main/main/Debug/main.log
+assembly_project/main/main/Debug/main.obj
+assembly_project/main/main/Debug/main.tlog/link.read.1.tlog
+assembly_project/main/.vs/main/v17/.suo
