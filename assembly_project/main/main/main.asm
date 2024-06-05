@@ -49,18 +49,8 @@ VK_SPACEBAR	EQU		000000020h
 			  BYTE 'Enter your choice:',0ah,0dh,0
 
 	GAME_RULE BYTE 'Rule',0ah,0dh
-	GAME_MENU BYTE 'Game Menu :',0ah,0dh
-			  BYTE 'Press R to Read the game rule', 0ah, 0dh
-			  BYTE 'Press D to increase the speed of the ball.', 0ah, 0dh
-			  BYTE 'Press A to decrease the speed of the ball.', 0ah, 0dh
-			  BYTE 'Press C to continue the game.', 0ah, 0dh
-			  BYTE 'q. Exit',0ah,0dh
-			  BYTE 'Enter your choice:',0ah,0dh,0
-
-	GAME_RULE BYTE 'Rule',0ah,0dh
 			  BYTE 'Player 1 uses A and D keys to move left and right.', 0ah, 0dh
 			  BYTE 'Player 2 uses left and right arrow keys to move left and right.', 0ah, 0dh
-			  BYTE 'press R to return to the menu',0,0ah,0dh
 			  BYTE 'press R to return to the menu',0,0ah,0dh
 
 	GAME_GROUND BYTE '===================                    ===================',0,0ah, 0dh
@@ -82,13 +72,14 @@ VK_SPACEBAR	EQU		000000020h
 	xPos_player2 BYTE 48
 	yPos_player2 BYTE 6
 
-	;ä¿¡è?ï¼Œæ±ºå®šå“ª?‹å¯ä»¥å?
+
+	;??????????
 	semaphore BYTE 0
-	;?‚é??³è?ï¼Œæ?ç¶“é?20æ¬¡ç?ä¿¡è??•ç??€è¦è??†ä?æ­¤ball
+	;????????20????????????ball
 	tamp WORD 20
 
 
-	;?ƒæ??€è¦ç?data----------------------------------------------------------------------------
+	;?????data----------------------------------------------------------------------------
 
 	;ball pos
 	xPos_ball BYTE 50
@@ -96,11 +87,11 @@ VK_SPACEBAR	EQU		000000020h
 
 	state DWORD 1
 	hit_wall DWORD 0
-	path DWORD 0    ;?¿å?æ­?œ¨?³ç§»ï¼Œå·¦ç§»ï??„æ˜¯?œæ­¢ 
-									;æ©«å??œæ­¢=0 ?Œæ??¹è?ä¸Šä?å·¦å³
-									;?´å??œæ­¢=1 ?ªæ??¹è?å·¦å³
-									;?³ç§»=2     ?¹è?ä¸Šä?å·¦å³?„å??‚æ”¹è®Šé€Ÿåº¦
-									;å·¦ç§»=3     ?¹è?ä¸Šä?å·¦å³?„å??‚æ”¹è®Šé€Ÿåº¦
+	path DWORD 0    ;?????????????? 
+									;????=0 ????????
+									;????=1 ??????
+									;??=2     ?????????????
+									;??=3     ?????????????
 	;-------------------------------------------------------------------------------------------
 
 	word_test Dword 0
@@ -114,7 +105,7 @@ main PROC
 		call ReadChar
 		mov inputChar, al
 		cmp inputChar, "c"
-		je menu
+		je game
 		
 	jmp homeLoop
     menu:
@@ -147,8 +138,8 @@ main PROC
 
 	gameLoop:	
 
-		;?–æ??¯æ?é«˜å„ª?ˆå?	
-		mov ah, 0 ;ahæ¸?çµ¦getkeystate?¤æ–·?¯å¦è¼¸å…¥
+		;????????	
+		mov ah, 0 ;ah?0?getkeystate??????
 		INVOKE GetKeyState, VK_X
 		.IF ah
 			jmp exitGame
@@ -164,7 +155,7 @@ main PROC
 			mov dh, yPos_ball
 			call UPDATE_BALL
 
-			;?¶ballæ²’è¢«?¥ä??‚ç??Ÿé???
+			;?ball?????????
 			.IF yPos_ball<6 || yPos_ball > 28
 				.IF xPos_ball > 42 && xPos_ball < 62
 					jmp GAME_STOP
@@ -172,7 +163,7 @@ main PROC
 			.ENDIF
 		.ENDIF
 
-		;ä¾é?åºæ±ºå®šplayer1?–player2ï¼Œé?ä¼¼å?context switch?„æ?å¿?
+		;?????player1?player2????context switch???
 		not semaphore
 		
 		;get user input
@@ -226,22 +217,22 @@ main PROC
 
 
 
-		jmp gameloop ;?²æ­¢?½ç™¡äº‚æ??¶ä??‰é?
+		jmp gameloop ;??????????
 
 		moveLeft:
 
-			;ç¢ºè??¯player1?„æ˜¯player2
+			;???player1??player2
 			cmp inputChar, 'j'
 			je player2_time_left
 
 			player1_time_left:
-				;?ˆç??‹æ?æ²’æ?è¶…é??Šç?ï¼Œæ??„è©±?´æ¥è·?
+				;?????????????????
 				cmp xPos_player1, 22
 				jle stop
 
 				mov dl, xPos_player1
 				mov dh, yPos_player1
-				mov esi,0			;0ä»?¡¨?‘å·¦ï¼ŒxPos?€è¦æ?1
+				mov esi,0			;0?????xPos???1
 				call UPDATE_PLAYER
 				mov xPos_player1, dl
 				mov yPos_player1, dh
@@ -249,13 +240,13 @@ main PROC
 
 
 			player2_time_left:
-				;?ˆç??‹æ?æ²’æ?è¶…é??Šç?ï¼Œæ??„è©±?´æ¥è·?
+				;?????????????????
 				cmp xPos_player2, 22
 				jle stop
 
 				mov dl, xPos_player2
 				mov dh, yPos_player2
-				mov esi,0			;0ä»?¡¨?‘å·¦ï¼ŒxPos?€è¦æ?1
+				mov esi,0			;0?????xPos???1
 				call UPDATE_PLAYER
 				mov xPos_player2, dl
 				mov yPos_player2, dh
@@ -265,32 +256,32 @@ main PROC
 		moveRight:
 
 
-			;ç¢ºè??¯player1?„æ˜¯player2
+			;???player1??player2
 			cmp inputChar, 'l'
 			je player2_time_right
 			
-			;?·è??„è‡ªplayer?„ä?ç½?å¾€?³ä???
+			;????player???(????)
 			player1_time_right:
-				;?ˆç??‹æ?æ²’æ?è¶…é??Šç?ï¼Œæ??„è©±?´æ¥è·?
+				;?????????????????
 				cmp xPos_player1, SIZEOF GAME_GROUND+14
 				jge stop
 
 				mov dl, xPos_player1
 				mov dh, yPos_player1
-				mov esi, 1			  ;1ä»?¡¨?‘å³ï¼ŒxPos?€è¦å?1
+				mov esi, 1			  ;1?????xPos???1
 				call UPDATE_PLAYER
 				mov xPos_player1, dl
 				mov yPos_player1, dh
 				jmp gameloop
 
 			player2_time_right:
-				;?ˆç??‹æ?æ²’æ?è¶…é??Šç?ï¼Œæ??„è©±?´æ¥è·?
+				;?????????????????
 				cmp xPos_player2, SIZEOF GAME_GROUND+14
 				jge stop
 
 				mov dl, xPos_player2
 				mov dh, yPos_player2
-				mov esi, 1			  ;1ä»?¡¨?‘å³ï¼ŒxPos?€è¦å?1
+				mov esi, 1			  ;1?????xPos???1
 				call UPDATE_PLAYER
 				mov xPos_player2, dl
 				mov yPos_player2, dh
@@ -302,10 +293,10 @@ main PROC
 		jmp gameLoop
 
 	GAME_STOP:
-		mov ah, 0 ;ah²M0µ¹getkeystate§PÂ_¬O§_¿é¤J
+		mov ah, 0 ;ah?0?getkeystate??????
 		INVOKE GetKeyState, VK_SPACE
 		.IF ah
-			;­«»s²yªº¦ì¸m»Pª¬ºA
+			;?????????
 			mov dl, xPos_ball
 			mov dh, yPos_ball
 			call Gotoxy
@@ -315,7 +306,7 @@ main PROC
 			call Ball
 			mov state, 1
 
-			;­«»splayerªº¦ì¸m
+			;??player???
 			mov dl, xPos_player1
 			mov dh, yPos_player1
 			call Gotoxy
@@ -379,23 +370,11 @@ GameRuleUI PROC
 	call WriteString
 	ret
 GameRuleUI ENDP
-GameMenuUI PROC
-	mov edx, OFFSET GAME_MENU
-	call WriteString
-
-	ret
-GameMenuUI ENDP
-
-GameRuleUI PROC
-	mov edx, OFFSET GAME_RULE
-	call WriteString
-	ret
-GameRuleUI ENDP
 
 GROUND PROC
 	;rule
-	; mov edx, OFFSET GAME_RULE
-	; call WriteString
+	mov edx, OFFSET GAME_RULE
+	call WriteString
 	
 	;draw ground button and top (height:0~24, width: 1~?)
 	mov dl, 22
@@ -464,7 +443,7 @@ UPDATE_BALL PROC
 	
 	push eax
 
-	;?‡è¨­dlå·²ç??¨ç›®?ç??„ä?ç½®ï??ˆæ??¤ç‚º" "??-"
+	;??dl??????????????" "?"-"
 	call Gotoxy
 	mov al," "
 	.IF dh==17
@@ -478,7 +457,7 @@ UPDATE_BALL PROC
 	.ENDIF
 	call WriteChar
 
-	;å¾€?¢å??„æ–¹?‘ç§»??eax?²å?stateï¼Œä¸¦?¤æ–·?¯å¦hit
+	;????????,eax??state??????hit
 	mov esi, 0
 	mov eax, state
 	mov dl, xPos_ball
@@ -494,7 +473,7 @@ UPDATE_BALL PROC
 	call BALL_MOVE
 
 	pop path
-	;xPos_playeræ²’è?ï¼Œç›´?¥æ?espä¸€?å»å°±å¥½ï¼Œä??¨å??¯player1?„æ˜¯player2
+	;xPos_player??????esp??????????player1??player2
 	add esp, 8
 
 	mov hit_wall,esi
@@ -502,17 +481,18 @@ UPDATE_BALL PROC
 	mov yPos_ball, dh
 
 
-	;æ²’æ?hit?„è©±?§æ—¢å®šæ–¹?‘ç§»??
+	;??hit?????????
 	call Gotoxy
 	mov ax, "@"
 	call WriteChar
 
-	;?‰hit?„è©±?ˆæ”¹è®Šé??•æ–¹?‘ï??¶å?ç§»å?
+	;?hit??????????????
 	.IF hit_wall==1
-		;?¹state?„å€¼ï??®ç?ä¿®æ”¹?ƒç?ç§»å??¹å?ï¼Œæ?å¾Œå??path
+
+		;?state??????????????????path
 		push path
 		push state
-		call BALL_STATE		;notionä¸Šé¢ä¸€æ®µç?
+		call BALL_STATE		;notion?????
 		pop state
 		pop path
 
