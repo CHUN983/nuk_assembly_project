@@ -41,8 +41,14 @@ VK_SPACEBAR	EQU		000000020h
 	  BYTE   '$ press c to be continue',0,0ah,0dh 
 
 	GAME_RULE BYTE 'Rule¡G',0ah,0dh
-			  BYTE "The player1 is on the buttom, keyword a and d represent left and right respectively.",0ah, 0dh
-			  BYTE "The player2 is on the top, keyword j and l represent left and right respectively.",0,0ah, 0dh
+			  BYTE 'Player 1 uses A and D keys to move left and right.', 0ah, 0dh
+			  BYTE 'Player 2 uses left and right arrow keys to move left and right.', 0ah, 0dh
+			  BYTE 'Press X to exit the game.', 0ah, 0dh
+			  BYTE 'Press D to increase the speed of the ball.', 0ah, 0dh
+			  BYTE 'Press A to decrease the speed of the ball.', 0ah, 0dh
+			  BYTE 'Press Q quit the game to the main menu.', 0ah, 0dh
+			  BYTE 'Press any key to start the game.', 0ah, 0dh, 0
+
 	GAME_GROUND BYTE '===================                    ===================',0,0ah, 0dh
 	GAME_SIDE_GROUND BYTE'||',0,0ah,0dh
 
