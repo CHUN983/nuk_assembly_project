@@ -15,6 +15,10 @@ VK_ENTER	EQU		00000000Dh
 VK_SPACEBAR	EQU		000000020h
 
 .data
+	;player name
+		p1name BYTE 100 DUP(0)
+		p2name BYTE 100 DUP(0)
+
 	;START PHOTO DATA
 		StartWidth EQU 301
 		StartHeight EQU 200
@@ -42,9 +46,9 @@ VK_SPACEBAR	EQU		000000020h
 
 	 GAME_MENU BYTE '  ',0ah,0dh
 	  BYTE   '                =====================================================',0ah,0dh
-	  BYTE   '               ||           ^   ^     ____    |\  |   |   |         ||',0ah,0dh                                        
-	  BYTE   '               ||          / \ / \    ____    | \ |   |   |         ||',0ah,0dh
-	  BYTE   '               ||         /   V   \   ____    |  \|   \___/         ||',0ah,0dh
+	  BYTE   '               ||           ^   ^     ----   |\  |   |   |          ||',0ah,0dh                                        
+	  BYTE   '               ||          / \ / \    ----   | \ |   |   |          ||',0ah,0dh
+	  BYTE   '               ||         /   V   \   ----   |  \|   \___/          ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
 	  BYTE   '               ||                  P1:__________                    ||',0ah,0dh
@@ -54,8 +58,8 @@ VK_SPACEBAR	EQU		000000020h
 	  BYTE   '               ||                                                   ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
 	  BYTE   '               ||=================                 =================||',0ah,0dh
-	  BYTE   '               || press X to exit |               | press R to RULE ||',0ah,0dh
-	  BYTE   '                =====================================================',0ah,0dh
+	  BYTE   '               || press x to exit |               | press r to RULE ||',0ah,0dh
+	  BYTE   '                =====================================================',0,0ah,0dh
 	
 
 
@@ -66,17 +70,17 @@ VK_SPACEBAR	EQU		000000020h
 	  BYTE   '               ||           |  \    \__/    |___    ___             ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||      1 Player 1 uses A and D keys                 ||',0ah,0dh
+	  BYTE   '               ||     1. Player 1 uses A and D keys                 ||',0ah,0dh
 	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||      2 Player 1 uses left and right arrow keys    ||',0ah,0dh
+	  BYTE   '               ||     2. Player 2 uses left and right arrow keys    ||',0ah,0dh
 	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
 	  BYTE   '               ||=================                ==================||',0ah,0dh
-	  BYTE   '               || press R to MENU |              | press C to enter ||',0ah,0dh
-	  BYTE   '                =====================================================',0ah,0dh
+	  BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
+	  BYTE   '                =====================================================',0,0ah,0dh
 
 
 ;/*GAME_MENU BYTE 'Game Menu :',0ah,0dh
@@ -401,6 +405,23 @@ GameMenuUI PROC
 	mov edx, OFFSET GAME_MENU
 	call WriteString
 
+	mov dl, 38
+	mov dh, 7
+	call Gotoxy
+
+    mov edx,OFFSET p1name
+	mov ecx,SIZEOF p1name
+	call ReadString
+	
+	mov dl, 38
+	mov dh, 9
+	call Gotoxy
+	
+
+	mov edx,OFFSET p2name
+	mov ecx,SIZEOF p2name
+	call ReadString
+
 	ret
 GameMenuUI ENDP
 
@@ -469,6 +490,19 @@ GROUND PROC
 		mov dl, xPos_player2
 		call Gotoxy
 		mov edx, OFFSET player
+		call WriteString
+
+		;show name
+		mov dh, 10
+		mov dl, 80
+		call Gotoxy
+		mov edx,OFFSET p1name
+		call WriteString
+
+		mov dh, 20
+		mov dl, 80
+		call Gotoxy
+		mov edx,OFFSET p2name
 		call WriteString
 
 	ret 
