@@ -302,6 +302,7 @@ main PROC
 
 	GAME_STOP:
 		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
+
 		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			;重製球的位置與狀態
@@ -347,6 +348,13 @@ main PROC
 
 			jmp gameloop
 		.ENDIF
+
+		;確認是否返回
+		INVOKE GetKeyState, VK_M
+		.IF ah
+			jmp MENU
+		.ENDIF
+
 		jmp GAME_STOP
 
 	exitGame:
