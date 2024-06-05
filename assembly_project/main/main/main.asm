@@ -51,12 +51,17 @@ VK_SPACEBAR	EQU		000000020h
 	inputChar BYTE ?
 
 	player BYTE "*****",0
+	;empty
+	empty BYTE "     ",0
+
+
 	;player1 pos
 	xPos_player1 BYTE 48
 	yPos_player1 BYTE 28
 	;player2 pos
 	xPos_player2 BYTE 48
 	yPos_player2 BYTE 6
+
 
 	;信號，決定哪個可以動
 	semaphore BYTE 0
@@ -70,7 +75,7 @@ VK_SPACEBAR	EQU		000000020h
 	xPos_ball BYTE 50
 	yPos_ball BYTE 17
 
-	state DWORD 11
+	state DWORD 1
 	hit_wall DWORD 0
 	path DWORD 0    ;板子正在右移，左移，還是靜止 
 									;橫向靜止=0 同時改變上下左右
@@ -115,7 +120,7 @@ main PROC
 
 
 		.IF tamp==0
-			mov tamp, 10
+			mov tamp, 5
 			mov dl, xPos_ball
 			mov dh, yPos_ball
 			call UPDATE_BALL
@@ -123,7 +128,7 @@ main PROC
 			;當ball沒被接住時結束遊戲
 			.IF yPos_ball<6 || yPos_ball > 28
 				.IF xPos_ball > 42 && xPos_ball < 62
-					jmp exitGame
+					jmp GAME_STOP
 				.ENDIF
 			.ENDIF
 		.ENDIF
@@ -256,7 +261,55 @@ main PROC
 
 	stop:
 		jmp gameLoop
-	
+
+	GAME_STOP:
+		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
+		INVOKE GetKeyState, VK_SPACE
+		.IF ah
+			;重製球的位置與狀態
+			mov dl, xPos_ball
+			mov dh, yPos_ball
+			call Gotoxy
+			mov al, " "
+			call WriteChar
+
+			call Ball
+			mov state, 1
+
+			;重製player的位置
+			mov dl, xPos_player1
+			mov dh, yPos_player1
+			call Gotoxy
+			mov edx, OFFSET empty
+			call WriteString
+
+			mov xPos_player1, 48
+			mov yPos_player1, 28
+			mov dl, xPos_player1
+			mov dh, yPos_player1
+			call Gotoxy
+			mov edx, OFFSET player
+			call WriteString
+
+			;for player2
+			mov dl, xPos_player2
+			mov dh, yPos_player2
+			call Gotoxy
+			mov edx, OFFSET empty
+			call WriteString
+
+			mov xPos_player2, 48
+			mov yPos_player2, 6
+			mov dl, xPos_player2
+			mov dh, yPos_player2
+			call Gotoxy
+			mov edx, OFFSET player
+			call WriteString
+
+
+			jmp gameloop
+		.ENDIF
+		jmp GAME_STOP
 
 	exitGame:
 	Invoke ExitProcess, 0
@@ -264,11 +317,14 @@ main ENDP
 
 
 BALL PROC
-	mov dl, xPos_ball
-	mov dh, yPos_ball
+	mov dl, 50
+	mov dh, 17
 	call Gotoxy
 	mov al ,"@"
 	call WriteChar
+
+	mov xPos_ball , dl
+	mov yPos_ball ,dh
 	ret
 BALL ENDP
 
@@ -390,6 +446,7 @@ UPDATE_BALL PROC
 
 	;有hit的話先改變運動方向，然後移動
 	.IF hit_wall==1
+
 		;改state的值，目的修改球的移動方向，最後存回path
 		push path
 		push state
