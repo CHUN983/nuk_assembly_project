@@ -40,18 +40,58 @@ VK_SPACEBAR	EQU		000000020h
 	  BYTE   '                ====================================================',0ah,0dh
 	  BYTE   '$ press c to be continue',0,0ah,0dh 
 
-	GAME_MENU BYTE 'Game Menu :',0ah,0dh
-			  BYTE 'Press R to Read the game rule', 0ah, 0dh
-			  BYTE 'Press D to increase the speed of the ball.', 0ah, 0dh
-			  BYTE 'Press A to decrease the speed of the ball.', 0ah, 0dh
-			  BYTE 'Press C to continue the game.', 0ah, 0dh
-			  BYTE 'q. Exit',0ah,0dh
-			  BYTE 'Enter your choice:',0ah,0dh,0
+	 GAME_MENU BYTE '  ',0ah,0dh
+	  BYTE   '                =====================================================',0ah,0dh
+	  BYTE   '               ||           ^   ^     ____    |\  |   |   |         ||',0ah,0dh                                        
+	  BYTE   '               ||          / \ / \    ____    | \ |   |   |         ||',0ah,0dh
+	  BYTE   '               ||         /   V   \   ____    |  \|   \___/         ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||                  P1:__________                    ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||                  P2:__________                    ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||=================                 =================||',0ah,0dh
+	  BYTE   '               || press X to exit |               | press R to RULE ||',0ah,0dh
+	  BYTE   '                =====================================================',0ah,0dh
+	
 
-	GAME_RULE BYTE 'Rule',0ah,0dh
-			  BYTE 'Player 1 uses A and D keys to move left and right.', 0ah, 0dh
-			  BYTE 'Player 2 uses left and right arrow keys to move left and right.', 0ah, 0dh
-			  BYTE 'press R to return to the menu',0,0ah,0dh
+
+	GAME_RULE BYTE '  ',0ah,0dh
+	  BYTE   '                =====================================================',0ah,0dh
+	  BYTE   '               ||            __                     ___             ||',0ah,0dh
+	  BYTE   '               ||           |__|    |  |    |       ___             ||',0ah,0dh
+	  BYTE   '               ||           |  \    \__/    |___    ___             ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||      1 Player 1 uses A and D keys                 ||',0ah,0dh
+	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||      2 Player 1 uses left and right arrow keys    ||',0ah,0dh
+	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||=================                ==================||',0ah,0dh
+	  BYTE   '               || press R to MENU |              | press C to enter ||',0ah,0dh
+	  BYTE   '                =====================================================',0ah,0dh
+
+
+;/*GAME_MENU BYTE 'Game Menu :',0ah,0dh
+;			  BYTE 'Press R to Read the game rule', 0ah, 0dh
+;			  BYTE 'Press D to increase the speed of the ball.', 0ah, 0dh
+;			  BYTE 'Press A to decrease the speed of the ball.', 0ah, 0dh
+;			  BYTE 'Press C to continue the game.', 0ah, 0dh
+;			  BYTE 'q. Exit',0ah,0dh
+;			  BYTE 'Enter your choice:',0ah,0dh,0 */
+
+;/*	GAME_RULE BYTE 'Rule',0ah,0dh
+;			  BYTE 'Player 1 uses A and D keys to move left and right.', 0ah, 0dh
+;			  BYTE 'Player 2 uses left and right arrow keys to move left and right.', 0ah, 0dh
+;			  BYTE 'press R to return to the menu',0,0ah,0dh */
+
 
 	GAME_GROUND BYTE '===================                    ===================',0,0ah, 0dh
 	GAME_SIDE_GROUND BYTE'||',0,0ah,0dh

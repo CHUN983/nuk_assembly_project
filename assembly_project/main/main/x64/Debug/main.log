@@ -1,0 +1,3 @@
+﻿  Assembling main.asm...
+main.asm(1): fatal error A1000: cannot open file : game_func.inc
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: 命令 "ml64.exe /c /nologo /Zi /Fo"x64\Debug\main.obj" /W3 /errorReport:prompt  /Tamain.asm" 已結束，代碼為 1。
