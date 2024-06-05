@@ -51,7 +51,7 @@ VK_SPACEBAR	EQU		000000020h
 	GAME_RULE BYTE 'Rule：',0ah,0dh
 			  BYTE 'Player 1 uses A and D keys to move left and right.', 0ah, 0dh
 			  BYTE 'Player 2 uses left and right arrow keys to move left and right.', 0ah, 0dh
-			  BYTE 'press R to return to the menu',0ah,0dh
+			  BYTE 'press R to return to the menu',0,0ah,0dh
 
 	GAME_GROUND BYTE '===================                    ===================',0,0ah, 0dh
 	GAME_SIDE_GROUND BYTE'||',0,0ah,0dh
@@ -106,7 +106,7 @@ main PROC
 	
 	menu:
 	call Clrscr
-	call GameMenu
+	call GameMenuUI
 	call ReadChar
 	mov inputChar, al
 	cmp inputChar, "r"
@@ -116,14 +116,15 @@ main PROC
 	cmp inputChar, "q"
 	je exitGame
 	jmp menu
-
+	
 	gamerule:
-	call Clrscr
-	call GameRule
+	call Clrscr; no 
+	call GameRuleUI
 	call ReadChar
 	mov inputChar, al
 	cmp inputChar, "r"
 	je menu
+	jmp gamerule
 
 	game:
 		call Clrscr
@@ -303,18 +304,18 @@ BALL PROC
 	ret
 BALL ENDP
 
-GameMenu PROC
+GameMenuUI PROC
 	mov edx, OFFSET GAME_MENU
 	call WriteString
 
 	ret
-GameMenu ENDP
+GameMenuUI ENDP
 
-GameRule PROC
+GameRuleUI PROC
 	mov edx, OFFSET GAME_RULE
 	call WriteString
 	ret
-GameRule ENDP
+GameRuleUI ENDP
 
 GROUND PROC
 	;rule
