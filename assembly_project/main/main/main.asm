@@ -40,14 +40,18 @@ VK_SPACEBAR	EQU		000000020h
 	  BYTE   '                ====================================================',0ah,0dh
 	  BYTE   '$ press c to be continue',0,0ah,0dh 
 
-	GAME_RULE BYTE 'Rule¡G',0ah,0dh
-			  BYTE 'Player 1 uses A and D keys to move left and right.', 0ah, 0dh
-			  BYTE 'Player 2 uses left and right arrow keys to move left and right.', 0ah, 0dh
-			  BYTE 'Press X to exit the game.', 0ah, 0dh
+	GAME_MENU BYTE 'Game Menu :',0ah,0dh
+			  BYTE 'Press R to Read the game rule', 0ah, 0dh
 			  BYTE 'Press D to increase the speed of the ball.', 0ah, 0dh
 			  BYTE 'Press A to decrease the speed of the ball.', 0ah, 0dh
-			  BYTE 'Press Q quit the game to the main menu.', 0ah, 0dh
-			  BYTE 'Press any key to start the game.', 0ah, 0dh, 0
+			  BYTE 'Press C to continue the game.', 0ah, 0dh
+			  BYTE 'q. Exit',0ah,0dh
+			  BYTE 'Enter your choice:',0ah,0dh,0
+
+	GAME_RULE BYTE 'Rule',0ah,0dh
+			  BYTE 'Player 1 uses A and D keys to move left and right.', 0ah, 0dh
+			  BYTE 'Player 2 uses left and right arrow keys to move left and right.', 0ah, 0dh
+			  BYTE 'press R to return to the menu',0,0ah,0dh
 
 	GAME_GROUND BYTE '===================                    ===================',0,0ah, 0dh
 	GAME_SIDE_GROUND BYTE'||',0,0ah,0dh
@@ -104,7 +108,27 @@ main PROC
 		je game
 		
 	jmp homeLoop
-
+    menu:
+	call Clrscr
+	call GameMenuUI
+	call ReadChar
+	mov inputChar, al
+	cmp inputChar, "r"
+	je gamerule
+	cmp inputChar, "c"
+	je game
+	cmp inputChar, "q"
+	je exitGame
+	jmp menu
+	
+	gamerule:
+	call Clrscr; no 
+	call GameRuleUI
+	call ReadChar
+	mov inputChar, al
+	cmp inputChar, "r"
+	je menu
+	jmp gamerule
 	game:
 		call Clrscr
 		call GROUND
@@ -334,6 +358,18 @@ BALL PROC
 	ret
 BALL ENDP
 
+GameMenuUI PROC
+	mov edx, OFFSET GAME_MENU
+	call WriteString
+
+	ret
+GameMenuUI ENDP
+
+GameRuleUI PROC
+	mov edx, OFFSET GAME_RULE
+	call WriteString
+	ret
+GameRuleUI ENDP
 
 GROUND PROC
 	;rule
