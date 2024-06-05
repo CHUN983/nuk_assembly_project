@@ -183,8 +183,8 @@ BALL_MOVE PROC
 					.IF dl <= bl
 						mov dh, 27
 						mov esi, 1
+						mov bl,BYTE PTR [ebp+20] ;press right or left or not
 						mov WORD PTR [ebp+12], 0 ;path
-						mov bl,BYTE PTR [ebp+20]
 						.IF bl=='a'
 							mov WORD PTR [ebp+12], 3
 						.ENDIF
@@ -203,8 +203,8 @@ BALL_MOVE PROC
 					.IF dl <= bl
 						mov dh, 7
 						mov esi, 1
+						mov bl,BYTE PTR [ebp+20] ;press right or left or not
 						mov WORD PTR [ebp+12], 0
-						mov bl, BYTE PTR [ebp+20]
 						.IF bl=='j'
 							mov WORD PTR [ebp+12], 3
 						.ENDIF
@@ -219,14 +219,14 @@ BALL_MOVE PROC
 		border:
 			;邊界上的判斷
 			.IF dh >= 29
-				.IF dl<=42 || dl>=63
+				.IF dl<=42 || dl>=61
 					mov dh, 28
 					mov esi, 1
 					mov WORD PTR [ebp+12], 0 ; 修改path
 				.ENDIF
 			.ENDIF
 			.IF dh <= 5
-				.IF dl<=42 || dl >=63
+				.IF dl<=42 || dl >=61
 					mov dh, 6
 					mov esi, 1
 					mov WORD PTR [ebp+12], 0
@@ -458,43 +458,43 @@ BALL_STATE PROC
 		mov eax, 9
 		jmp CONTINUE
 	STATE_2_2:
-		mov eax, 8
-		jmp CONTINUE
-	STATE_3_2:
-		mov eax, 12
-		jmp CONTINUE
-	STATE_4_2:
-		mov eax, 13
-		jmp CONTINUE
-	STATE_5_2:
 		mov eax, 10
 		jmp CONTINUE
-	STATE_6_2:
+	STATE_3_2:
 		mov eax, 11
 		jmp CONTINUE
-	STATE_7_2:
+	STATE_4_2:
 		mov eax, 11
+		jmp CONTINUE
+	STATE_5_2:
+		mov eax, 8
+		jmp CONTINUE
+	STATE_6_2:
+		mov eax, 9
+		jmp CONTINUE
+	STATE_7_2:
+		mov eax, 13
 		jmp CONTINUE
 	STATE_8_2:
 		mov eax, 2
 		jmp CONTINUE
 	STATE_9_2:
-		mov eax, 1
-		jmp CONTINUE
-	STATE_10_2:
-		mov eax, 5
-		jmp CONTINUE
-	STATE_11_2:
-		mov eax, 6
-		jmp CONTINUE
-	STATE_12_2:
 		mov eax, 3
 		jmp CONTINUE
-	STATE_13_2:
+	STATE_10_2:
 		mov eax, 4
 		jmp CONTINUE
-	STATE_14_2:
+	STATE_11_2:
 		mov eax, 4
+		jmp CONTINUE
+	STATE_12_2:
+		mov eax, 1
+		jmp CONTINUE
+	STATE_13_2:
+		mov eax, 5
+		jmp CONTINUE
+	STATE_14_2:
+		mov eax, 6
 		jmp CONTINUE
 
 	PATH_3:    ;如果是?向左移
@@ -533,43 +533,43 @@ BALL_STATE PROC
 		mov eax, 12
 		jmp CONTINUE
 	STATE_2_3:
-		mov eax, 13
-		jmp CONTINUE
-	STATE_3_3:
-		mov eax, 14
-		jmp CONTINUE
-	STATE_4_3:
-		mov eax, 14
-		jmp CONTINUE
-	STATE_5_3:
 		mov eax, 8
 		jmp CONTINUE
-	STATE_6_3:
+	STATE_3_3:
 		mov eax, 9
 		jmp CONTINUE
-	STATE_7_3:
+	STATE_4_3:
 		mov eax, 10
+		jmp CONTINUE
+	STATE_5_3:
+		mov eax, 13
+		jmp CONTINUE
+	STATE_6_3:
+		mov eax, 14
+		jmp CONTINUE
+	STATE_7_3:
+		mov eax, 14
 		jmp CONTINUE
 	STATE_8_3:
 		mov eax, 5
 		jmp CONTINUE
 	STATE_9_3:
-		mov eax, 6
-		jmp CONTINUE
-	STATE_10_3:
-		mov eax, 7
-		jmp CONTINUE
-	STATE_11_3:
-		mov eax, 7
-		jmp CONTINUE
-	STATE_12_3:
 		mov eax, 1
 		jmp CONTINUE
-	STATE_13_3:
+	STATE_10_3:
 		mov eax, 2
 		jmp CONTINUE
-	STATE_14_3:
+	STATE_11_3:
 		mov eax, 3
+		jmp CONTINUE
+	STATE_12_3:
+		mov eax, 6
+		jmp CONTINUE
+	STATE_13_3:
+		mov eax, 7
+		jmp CONTINUE
+	STATE_14_3:
+		mov eax, 7
 		jmp CONTINUE
 
 	CONTINUE:
