@@ -73,13 +73,13 @@ VK_SPACEBAR	EQU		000000020h
 	yPos_player2 BYTE 6
 
 
-	;«H¸¹¡A¨M©w­þ­Ó¥i¥H°Ê
+	;ä¿¡è™Ÿï¼Œæ±ºå®šå“ªå€‹å¯ä»¥å‹•
 	semaphore BYTE 0
-	;®É¶¡ÂW°O¡A¨C¸g¹L20¦¸ªº«H¸¹³B²z»Ý­n³B²z¤@¦¹ball
+	;æ™‚é–“æˆ³è¨˜ï¼Œæ¯ç¶“éŽ20æ¬¡çš„ä¿¡è™Ÿè™•ç†éœ€è¦è™•ç†ä¸€æ­¤ball
 	tamp WORD 20
 
 
-	;²y©Ò»Ý­nªºdata----------------------------------------------------------------------------
+	;çƒæ‰€éœ€è¦çš„data----------------------------------------------------------------------------
 
 	;ball pos
 	xPos_ball BYTE 50
@@ -87,11 +87,11 @@ VK_SPACEBAR	EQU		000000020h
 
 	state DWORD 1
 	hit_wall DWORD 0
-	path DWORD 0    ;ªO¤l¥¿¦b¥k²¾¡A¥ª²¾¡AÁÙ¬OÀR¤î 
-									;¾î¦VÀR¤î=0 ¦P®É§ïÅÜ¤W¤U¥ª¥k
-									;ª½¦VÀR¤î=1 ¥u·|§ïÅÜ¥ª¥k
-									;¥k²¾=2     §ïÅÜ¤W¤U¥ª¥kªº¦P®É§ïÅÜ³t«×
-									;¥ª²¾=3     §ïÅÜ¤W¤U¥ª¥kªº¦P®É§ïÅÜ³t«×
+	path DWORD 0    ;æ¿å­æ­£åœ¨å³ç§»ï¼Œå·¦ç§»ï¼Œé‚„æ˜¯éœæ­¢ 
+									;æ©«å‘éœæ­¢=0 åŒæ™‚æ”¹è®Šä¸Šä¸‹å·¦å³
+									;ç›´å‘éœæ­¢=1 åªæœƒæ”¹è®Šå·¦å³
+									;å³ç§»=2     æ”¹è®Šä¸Šä¸‹å·¦å³çš„åŒæ™‚æ”¹è®Šé€Ÿåº¦
+									;å·¦ç§»=3     æ”¹è®Šä¸Šä¸‹å·¦å³çš„åŒæ™‚æ”¹è®Šé€Ÿåº¦
 	;-------------------------------------------------------------------------------------------
 
 	word_test Dword 0
@@ -137,8 +137,8 @@ main PROC
 
 	gameLoop:	
 
-		;¨ú®ø¬O³Ì°ªÀu¥ý§Ç	
-		mov ah, 0 ;ah²M0µ¹getkeystate§PÂ_¬O§_¿é¤J
+		;å–æ¶ˆæ˜¯æœ€é«˜å„ªå…ˆåº	
+		mov ah, 0 ;ahæ¸…0çµ¦getkeystateåˆ¤æ–·æ˜¯å¦è¼¸å…¥
 		INVOKE GetKeyState, VK_X
 		.IF ah
 			jmp exitGame
@@ -154,7 +154,7 @@ main PROC
 			mov dh, yPos_ball
 			call UPDATE_BALL
 
-			;·íball¨S³Q±µ¦í®Éµ²§ô¹CÀ¸
+			;ç•¶ballæ²’è¢«æŽ¥ä½æ™‚çµæŸéŠæˆ²
 			.IF yPos_ball<6 || yPos_ball > 28
 				.IF xPos_ball > 42 && xPos_ball < 62
 					jmp GAME_STOP
@@ -162,7 +162,7 @@ main PROC
 			.ENDIF
 		.ENDIF
 
-		;¨Ì¶¶§Ç¨M©wplayer1©Îplayer2¡AÃþ¦ü°µcontext switchªº·§©À
+		;ä¾é †åºæ±ºå®šplayer1æˆ–player2ï¼Œé¡žä¼¼åšcontext switchçš„æ¦‚å¿µ
 		not semaphore
 		
 		;get user input
@@ -216,22 +216,22 @@ main PROC
 
 
 
-		jmp gameloop ;¨¾¤î¥ÕÃ¨¶Ã«ö¨ä¥L«ö¶s
+		jmp gameloop ;é˜²æ­¢ç™½ç™¡äº‚æŒ‰å…¶ä»–æŒ‰éˆ•
 
 		moveLeft:
 
-			;½T»{¬Oplayer1ÁÙ¬Oplayer2
+			;ç¢ºèªæ˜¯player1é‚„æ˜¯player2
 			cmp inputChar, 'j'
 			je player2_time_left
 
 			player1_time_left:
-				;¥ý¬Ý¬Ý¦³¨S¦³¶W¹LÃä¬É¡A¦³ªº¸Üª½±µ¸õ
+				;å…ˆçœ‹çœ‹æœ‰æ²’æœ‰è¶…éŽé‚Šç•Œï¼Œæœ‰çš„è©±ç›´æŽ¥è·³
 				cmp xPos_player1, 22
 				jle stop
 
 				mov dl, xPos_player1
 				mov dh, yPos_player1
-				mov esi,0			;0¥Nªí¦V¥ª¡AxPos»Ý­n´î1
+				mov esi,0			;0ä»£è¡¨å‘å·¦ï¼ŒxPoséœ€è¦æ¸›1
 				call UPDATE_PLAYER
 				mov xPos_player1, dl
 				mov yPos_player1, dh
@@ -239,13 +239,13 @@ main PROC
 
 
 			player2_time_left:
-				;¥ý¬Ý¬Ý¦³¨S¦³¶W¹LÃä¬É¡A¦³ªº¸Üª½±µ¸õ
+				;å…ˆçœ‹çœ‹æœ‰æ²’æœ‰è¶…éŽé‚Šç•Œï¼Œæœ‰çš„è©±ç›´æŽ¥è·³
 				cmp xPos_player2, 22
 				jle stop
 
 				mov dl, xPos_player2
 				mov dh, yPos_player2
-				mov esi,0			;0¥Nªí¦V¥ª¡AxPos»Ý­n´î1
+				mov esi,0			;0ä»£è¡¨å‘å·¦ï¼ŒxPoséœ€è¦æ¸›1
 				call UPDATE_PLAYER
 				mov xPos_player2, dl
 				mov yPos_player2, dh
@@ -255,32 +255,32 @@ main PROC
 		moveRight:
 
 
-			;½T»{¬Oplayer1ÁÙ¬Oplayer2
+			;ç¢ºèªæ˜¯player1é‚„æ˜¯player2
 			cmp inputChar, 'l'
 			je player2_time_right
 			
-			;°õ¦æ¦U¦Ûplayerªº¦ì¸m(©¹¥k¤@®æ)
+			;åŸ·è¡Œå„è‡ªplayerçš„ä½ç½®(å¾€å³ä¸€æ ¼)
 			player1_time_right:
-				;¥ý¬Ý¬Ý¦³¨S¦³¶W¹LÃä¬É¡A¦³ªº¸Üª½±µ¸õ
+				;å…ˆçœ‹çœ‹æœ‰æ²’æœ‰è¶…éŽé‚Šç•Œï¼Œæœ‰çš„è©±ç›´æŽ¥è·³
 				cmp xPos_player1, SIZEOF GAME_GROUND+14
 				jge stop
 
 				mov dl, xPos_player1
 				mov dh, yPos_player1
-				mov esi, 1			  ;1¥Nªí¦V¥k¡AxPos»Ý­n¥[1
+				mov esi, 1			  ;1ä»£è¡¨å‘å³ï¼ŒxPoséœ€è¦åŠ 1
 				call UPDATE_PLAYER
 				mov xPos_player1, dl
 				mov yPos_player1, dh
 				jmp gameloop
 
 			player2_time_right:
-				;¥ý¬Ý¬Ý¦³¨S¦³¶W¹LÃä¬É¡A¦³ªº¸Üª½±µ¸õ
+				;å…ˆçœ‹çœ‹æœ‰æ²’æœ‰è¶…éŽé‚Šç•Œï¼Œæœ‰çš„è©±ç›´æŽ¥è·³
 				cmp xPos_player2, SIZEOF GAME_GROUND+14
 				jge stop
 
 				mov dl, xPos_player2
 				mov dh, yPos_player2
-				mov esi, 1			  ;1¥Nªí¦V¥k¡AxPos»Ý­n¥[1
+				mov esi, 1			  ;1ä»£è¡¨å‘å³ï¼ŒxPoséœ€è¦åŠ 1
 				call UPDATE_PLAYER
 				mov xPos_player2, dl
 				mov yPos_player2, dh
@@ -292,10 +292,10 @@ main PROC
 		jmp gameLoop
 
 	GAME_STOP:
-		mov ah, 0 ;ah²M0µ¹getkeystate§PÂ_¬O§_¿é¤J
+		mov ah, 0 ;ahæ¸…0çµ¦getkeystateåˆ¤æ–·æ˜¯å¦è¼¸å…¥
 		INVOKE GetKeyState, VK_SPACE
 		.IF ah
-			;­«»s²yªº¦ì¸m»Pª¬ºA
+			;é‡è£½çƒçš„ä½ç½®èˆ‡ç‹€æ…‹
 			mov dl, xPos_ball
 			mov dh, yPos_ball
 			call Gotoxy
@@ -305,7 +305,7 @@ main PROC
 			call Ball
 			mov state, 1
 
-			;­«»splayerªº¦ì¸m
+			;é‡è£½playerçš„ä½ç½®
 			mov dl, xPos_player1
 			mov dh, yPos_player1
 			call Gotoxy
@@ -439,7 +439,7 @@ UPDATE_BALL PROC
 	
 	push eax
 
-	;°²³]dl¤w¸g¦b¥Ø«e²yªº¦ì¸m¡A¥ý²M°£¬°" "©Î"-"
+	;å‡è¨­dlå·²ç¶“åœ¨ç›®å‰çƒçš„ä½ç½®ï¼Œå…ˆæ¸…é™¤ç‚º" "æˆ–"-"
 	call Gotoxy
 	mov al," "
 	.IF dh==17
@@ -453,7 +453,7 @@ UPDATE_BALL PROC
 	.ENDIF
 	call WriteChar
 
-	;©¹¬J©wªº¤è¦V²¾°Ê,eaxÀx¦sstate¡A¨Ã§PÂ_¬O§_hit
+	;å¾€æ—¢å®šçš„æ–¹å‘ç§»å‹•,eaxå„²å­˜stateï¼Œä¸¦åˆ¤æ–·æ˜¯å¦hit
 	mov esi, 0
 	mov eax, state
 	mov dl, xPos_ball
@@ -469,7 +469,7 @@ UPDATE_BALL PROC
 	call BALL_MOVE
 
 	pop path
-	;xPos_player¨SÅÜ¡Aª½±µ§âesp¤@¦^¥h´N¦n¡A¤£¥Î¦A¬Oplayer1ÁÙ¬Oplayer2
+	;xPos_playeræ²’è®Šï¼Œç›´æŽ¥æŠŠespä¸€å›žåŽ»å°±å¥½ï¼Œä¸ç”¨å†æ˜¯player1é‚„æ˜¯player2
 	add esp, 8
 
 	mov hit_wall,esi
@@ -477,18 +477,18 @@ UPDATE_BALL PROC
 	mov yPos_ball, dh
 
 
-	;¨S¦³hitªº¸Ü·Ó¬J©w¤è¦V²¾°Ê
+	;æ²’æœ‰hitçš„è©±ç…§æ—¢å®šæ–¹å‘ç§»å‹•
 	call Gotoxy
 	mov ax, "@"
 	call WriteChar
 
-	;¦³hitªº¸Ü¥ý§ïÅÜ¹B°Ê¤è¦V¡AµM«á²¾°Ê
+	;æœ‰hitçš„è©±å…ˆæ”¹è®Šé‹å‹•æ–¹å‘ï¼Œç„¶å¾Œç§»å‹•
 	.IF hit_wall==1
 
-		;§ïstateªº­È¡A¥Øªº­×§ï²yªº²¾°Ê¤è¦V¡A³Ì«á¦s¦^path
+		;æ”¹stateçš„å€¼ï¼Œç›®çš„ä¿®æ”¹çƒçš„ç§»å‹•æ–¹å‘ï¼Œæœ€å¾Œå­˜å›žpath
 		push path
 		push state
-		call BALL_STATE		;notion¤W­±¤@¬qªº
+		call BALL_STATE		;notionä¸Šé¢ä¸€æ®µçš„
 		pop state
 		pop path
 
