@@ -19,6 +19,10 @@ VK_SPACEBAR	EQU		000000020h
 	;player name
 		p1name BYTE 100 DUP(0)
 		p2name BYTE 100 DUP(0)
+	;score:
+		P1_Score DWORD 0
+		P2_Score DWORD 0
+		present_score BYTE ":",0
 
 	;START PHOTO DATA
 		StartWidth EQU 301
@@ -178,6 +182,7 @@ main PROC
 		call Clrscr
 		call GROUND
 		call BALL
+		call PLAYER_POS
 
 
 	gameLoop:	
@@ -208,8 +213,13 @@ main PROC
 			call UPDATE_BALL
 
 			;當ball沒被接住時結束遊戲
-			.IF yPos_ball<6 || yPos_ball > 28
-				.IF xPos_ball > 42 && xPos_ball < 62
+			.IF xPos_ball > 42 && xPos_ball < 62
+				.IF yPos_ball < 6
+					inc P2_Score
+					jmp GAME_STOP
+				.ENDIF
+				.IF yPos_ball > 28
+					inc P1_Score
 					jmp GAME_STOP
 				.ENDIF
 			.ENDIF
@@ -349,6 +359,7 @@ main PROC
 
 		INVOKE GetKeyState, VK_SPACE
 		.IF ah
+			
 			;重製球的位置與狀態
 			mov dl, xPos_ball
 			mov dh, yPos_ball
@@ -360,18 +371,11 @@ main PROC
 			mov state, 1
 
 			;重製player的位置
+			;for player1
 			mov dl, xPos_player1
 			mov dh, yPos_player1
 			call Gotoxy
 			mov edx, OFFSET empty
-			call WriteString
-
-			mov xPos_player1, 48
-			mov yPos_player1, 28
-			mov dl, xPos_player1
-			mov dh, yPos_player1
-			call Gotoxy
-			mov edx, OFFSET player
 			call WriteString
 
 			;for player2
@@ -381,13 +385,9 @@ main PROC
 			mov edx, OFFSET empty
 			call WriteString
 
-			mov xPos_player2, 48
-			mov yPos_player2, 6
-			mov dl, xPos_player2
-			mov dh, yPos_player2
-			call Gotoxy
-			mov edx, OFFSET player
-			call WriteString
+
+
+			call PLAYER_POS
 
 
 			jmp gameloop
@@ -496,35 +496,51 @@ GROUND PROC
 		call WriteString
 		call Crlf
 		loop side2
+	ret
+GROUND ENDP
 
-	player_pos:
-		mov dh, yPos_player1
-		mov dl, xPos_player1
-		call Gotoxy
-		mov edx, OFFSET player
-		call WriteString
+PLAYER_POS PROC
 
-		mov dh, yPos_player2
-		mov dl, xPos_player2
-		call Gotoxy
-		mov edx, OFFSET player
-		call WriteString
+	mov dh, 28
+	mov dl, 48
+	mov xPos_player1, dl
+	mov yPos_player1, dh
+	call Gotoxy
+	mov edx, OFFSET player
+	call WriteString
 
-		;show name
-		mov dh, 10
-		mov dl, 80
-		call Gotoxy
-		mov edx,OFFSET p1name
-		call WriteString
+	mov dh, 6
+	mov dl, 48
+	mov xPos_player2, dl
+	mov yPos_player2, dh
+	call Gotoxy
+	mov edx, OFFSET player
+	call WriteString
 
-		mov dh, 20
-		mov dl, 80
-		call Gotoxy
-		mov edx,OFFSET p2name
-		call WriteString
+	;show name
+	mov dh, 10
+	mov dl, 90
+	call Gotoxy
+	mov edx,OFFSET p1name
+	call WriteString
+	mov al, present_score
+	call WriteChar
+	mov eax, P1_SCORE
+	call WriteDec
+
+	mov dh, 20
+	mov dl, 90
+	call Gotoxy
+	mov edx,OFFSET p2name
+	call WriteString
+	mov al, present_score
+	call WriteChar
+	mov eax, P2_Score
+	call WriteDec
+	
 
 	ret 
-GROUND ENDP
+PLAYER_POS ENDP
 
 
 UPDATE_BALL PROC
