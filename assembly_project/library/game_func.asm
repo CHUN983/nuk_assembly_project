@@ -579,6 +579,29 @@ BALL_STATE PROC
 ret
 BALL_STATE ENDP
 
+;-----------------------------------------------------------------
+;把球變顏色(目前紅色)
+;receives: edx,eax
+;return : 無
+SET_BALL_COLOR PROC
+;-----------------------------------------------------------------
+	push edx
+	push eax
+	
+	mov eax,4           ;把紅色的變數放到eax
+	call SetTextColor   ;call setcolor把eax的值給setcolor
+	;mov edx,OFFSET the@ 把變數的位置放到edx
+	pop eax
+	push eax
+	call WriteChar
+	mov eax,2
+	call SetTextColor   ;把set color變回黑色
+	
+	pop eax
+	pop edx
+	ret 
+SET_BALL_COLOR ENDP
+
 
 END
 
