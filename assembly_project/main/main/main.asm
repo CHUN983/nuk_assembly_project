@@ -411,7 +411,8 @@ BALL PROC
 	mov dh, 17
 	call Gotoxy
 	mov al ,"@"
-	call WriteChar
+	call SET_BALL_COLOR
+	;call WriteChar
 
 	mov xPos_ball , dl
 	mov yPos_ball ,dh
@@ -571,7 +572,7 @@ UPDATE_BALL PROC
 	;沒有hit的話照既定方向移動
 	call Gotoxy
 	mov ax, "@"
-	call WriteChar
+	call SET_BALL_COLOR
 
 	;有hit的話先改變運動方向，然後移動
 	.IF hit_wall==1
@@ -590,7 +591,6 @@ UPDATE_BALL PROC
 	pop eax
 	ret
 UPDATE_BALL ENDP
-
 
 
 END main	
