@@ -11,6 +11,7 @@ VK_A		EQU		000000041h
 VK_S		EQU		000000053h
 VK_D		EQU		000000044h
 VK_X		EQU		000000058h
+VK_M		EQU		00000004Dh
 VK_ENTER	EQU		00000000Dh
 VK_SPACEBAR	EQU		000000020h
 
@@ -191,6 +192,14 @@ main PROC
 		mov eax,3
 		call delay
 
+		;按M可以回到menu
+		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
+		INVOKE GetKeyState, VK_M
+		.IF ah
+			jmp menu
+		.ENDIF
+		
+
 
 		.IF tamp==0
 			mov tamp, 5
@@ -337,6 +346,7 @@ main PROC
 
 	GAME_STOP:
 		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
+
 		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			;重製球的位置與狀態
@@ -382,6 +392,13 @@ main PROC
 
 			jmp gameloop
 		.ENDIF
+
+		;確認是否返回
+		INVOKE GetKeyState, VK_M
+		.IF ah
+			jmp MENU
+		.ENDIF
+
 		jmp GAME_STOP
 
 	exitGame:
