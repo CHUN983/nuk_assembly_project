@@ -178,6 +178,7 @@ main PROC
 		call Clrscr
 		call GROUND
 		call BALL
+		call PLAYER_POS
 
 
 	gameLoop:	
@@ -360,18 +361,11 @@ main PROC
 			mov state, 1
 
 			;重製player的位置
+			;for player1
 			mov dl, xPos_player1
 			mov dh, yPos_player1
 			call Gotoxy
 			mov edx, OFFSET empty
-			call WriteString
-
-			mov xPos_player1, 48
-			mov yPos_player1, 28
-			mov dl, xPos_player1
-			mov dh, yPos_player1
-			call Gotoxy
-			mov edx, OFFSET player
 			call WriteString
 
 			;for player2
@@ -381,13 +375,7 @@ main PROC
 			mov edx, OFFSET empty
 			call WriteString
 
-			mov xPos_player2, 48
-			mov yPos_player2, 6
-			mov dl, xPos_player2
-			mov dh, yPos_player2
-			call Gotoxy
-			mov edx, OFFSET player
-			call WriteString
+			call PLAYER_POS
 
 
 			jmp gameloop
@@ -496,35 +484,42 @@ GROUND PROC
 		call WriteString
 		call Crlf
 		loop side2
+	ret
+GROUND ENDP
 
-	player_pos:
-		mov dh, yPos_player1
-		mov dl, xPos_player1
-		call Gotoxy
-		mov edx, OFFSET player
-		call WriteString
+PLAYER_POS PROC
 
-		mov dh, yPos_player2
-		mov dl, xPos_player2
-		call Gotoxy
-		mov edx, OFFSET player
-		call WriteString
+	mov dh, 28
+	mov dl, 48
+	mov xPos_player1, dl
+	mov yPos_player1, dh
+	call Gotoxy
+	mov edx, OFFSET player
+	call WriteString
 
-		;show name
-		mov dh, 10
-		mov dl, 80
-		call Gotoxy
-		mov edx,OFFSET p1name
-		call WriteString
+	mov dh, 6
+	mov dl, 48
+	mov xPos_player2, dl
+	mov yPos_player2, dh
+	call Gotoxy
+	mov edx, OFFSET player
+	call WriteString
 
-		mov dh, 20
-		mov dl, 80
-		call Gotoxy
-		mov edx,OFFSET p2name
-		call WriteString
+	;show name
+	mov dh, 10
+	mov dl, 80
+	call Gotoxy
+	mov edx,OFFSET p1name
+	call WriteString
+
+	mov dh, 20
+	mov dl, 80
+	call Gotoxy
+	mov edx,OFFSET p2name
+	call WriteString
 
 	ret 
-GROUND ENDP
+PLAYER_POS ENDP
 
 
 UPDATE_BALL PROC
