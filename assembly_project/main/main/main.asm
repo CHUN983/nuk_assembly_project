@@ -87,9 +87,9 @@ VK_SPACEBAR	EQU		000000020h
 	GAME_END_P1 BYTE '  ',0ah,0dh
 	BYTE   '                =====================================================',0ah,0dh
 	BYTE   '               ||                  __                               ||',0ah,0dh
-	BYTE   '               ||                 |  )         /|                   ||',0ah,0dh
+	BYTE   '               ||                 |  )          |                   ||',0ah,0dh
 	BYTE   '               ||                 |￣           |                   ||',0ah,0dh
-	BYTE   '               ||                 |             |                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                       _____                       ||',0ah,0dh
 	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
 	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
@@ -105,10 +105,10 @@ VK_SPACEBAR	EQU		000000020h
 
 	GAME_END_P2 BYTE '  ',0ah,0dh
 	BYTE   '                =====================================================',0ah,0dh
-	BYTE   '               ||                  __                               ||',0ah,0dh
-	BYTE   '               ||                 |  )         /|                   ||',0ah,0dh
-	BYTE   '               ||                 |￣           |                   ||',0ah,0dh
-	BYTE   '               ||                 |             |                   ||',0ah,0dh
+	BYTE   '               ||                  __         __                    ||',0ah,0dh
+	BYTE   '               ||                 |  )        __|                   ||',0ah,0dh
+	BYTE   '               ||                 |￣        |__                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                       _____                       ||',0ah,0dh
 	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
 	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
