@@ -27,62 +27,99 @@ VK_SPACEBAR	EQU		000000020h
 		StartData BYTE StartWidth*StartHeight dup(0)
     
 	GAME_START_STR BYTE '  ',0ah,0dh
-	  BYTE   '                ====================================================',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh                                        
-	  BYTE   '               ||            *   uuuuuu uu uuuuuu     *            ||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '               ||--------------------------------------------------||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '               ||   Please Enter the name of the first player      ||',0ah,0dh
-	  BYTE   '               ||                then press Enter                  ||',0ah,0dh   
-	  BYTE   '               ||   Please Enter the name of the second player     ||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '               ||         Then press Enter to start play           ||',0ah,0dh 
-	  BYTE   '               ||       **MAX 7 CHARCHTERS FOR EACH PLAYER**       ||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '                ====================================================',0ah,0dh
-	  BYTE   '$ press c to be continue',0,0ah,0dh 
+	BYTE   '                ====================================================',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh                                        
+	BYTE   '               ||            *   uuuuuu uu uuuuuu     *            ||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '               ||--------------------------------------------------||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '               ||   Please Enter the name of the first player      ||',0ah,0dh
+	BYTE   '               ||                then press Enter                  ||',0ah,0dh   
+	BYTE   '               ||   Please Enter the name of the second player     ||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '               ||         Then press Enter to start play           ||',0ah,0dh 
+	BYTE   '               ||       **MAX 7 CHARCHTERS FOR EACH PLAYER**       ||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '                ====================================================',0ah,0dh
+	BYTE   '$ press c to be continue',0,0ah,0dh 
 
-	 GAME_MENU BYTE '  ',0ah,0dh
-	  BYTE   '                =====================================================',0ah,0dh
-	  BYTE   '               ||           ^   ^     ----   |\  |   |   |          ||',0ah,0dh                                        
-	  BYTE   '               ||          / \ / \    ----   | \ |   |   |          ||',0ah,0dh
-	  BYTE   '               ||         /   V   \   ----   |  \|   \___/          ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                  P1:__________                    ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                  P2:__________                    ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||=================                 =================||',0ah,0dh
-	  BYTE   '               || press x to exit |               | press r to RULE ||',0ah,0dh
-	  BYTE   '                =====================================================',0,0ah,0dh
+	GAME_MENU BYTE '  ',0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||           ^   ^     ----   |\  |   |   |          ||',0ah,0dh                                        
+	BYTE   '               ||          / \ / \    ----   | \ |   |   |          ||',0ah,0dh
+	BYTE   '               ||         /   V   \   ----   |  \|   \___/          ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                  P1:__________                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                  P2:__________                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||=================                 =================||',0ah,0dh
+	BYTE   '               || press x to exit |               | press r to RULE ||',0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
 	
 
 
 	GAME_RULE BYTE '  ',0ah,0dh
-	  BYTE   '                =====================================================',0ah,0dh
-	  BYTE   '               ||            __                     ___             ||',0ah,0dh
-	  BYTE   '               ||           |__|    |  |    |       ___             ||',0ah,0dh
-	  BYTE   '               ||           |  \    \__/    |___    ___             ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||     1. Player 1 uses A and D keys                 ||',0ah,0dh
-	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||     2. Player 2 uses left and right arrow keys    ||',0ah,0dh
-	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||=================                ==================||',0ah,0dh
-	  BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
-	  BYTE   '                =====================================================',0,0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||            __                     ___             ||',0ah,0dh
+	BYTE   '               ||           |__|    |  |    |       ___             ||',0ah,0dh
+	BYTE   '               ||           |  \    \__/    |___    ___             ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||     1. Player 1 uses A and D keys                 ||',0ah,0dh
+	BYTE   '               ||        to move left and right.                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||     2. Player 2 uses left and right arrow keys    ||',0ah,0dh
+	BYTE   '               ||        to move left and right.                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||=================                ==================||',0ah,0dh
+	BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
 
 
+	GAME_END_P1 BYTE '  ',0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||                  __                               ||',0ah,0dh
+	BYTE   '               ||                 |  )         /|                   ||',0ah,0dh
+	BYTE   '               ||                 |￣           |                   ||',0ah,0dh
+	BYTE   '               ||                 |             |                   ||',0ah,0dh
+	BYTE   '               ||                       _____                       ||',0ah,0dh
+	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
+	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
+	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||=================                ==================||',0ah,0dh
+	BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
+
+	GAME_END_P2 BYTE '  ',0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||                  __                               ||',0ah,0dh
+	BYTE   '               ||                 |  )         /|                   ||',0ah,0dh
+	BYTE   '               ||                 |￣           |                   ||',0ah,0dh
+	BYTE   '               ||                 |             |                   ||',0ah,0dh
+	BYTE   '               ||                       _____                       ||',0ah,0dh
+	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
+	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
+	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||=================                ==================||',0ah,0dh
+	BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
 ;/*GAME_MENU BYTE 'Game Menu :',0ah,0dh
 ;			  BYTE 'Press R to Read the game rule', 0ah, 0dh
 ;			  BYTE 'Press D to increase the speed of the ball.', 0ah, 0dh
