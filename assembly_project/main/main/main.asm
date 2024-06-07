@@ -86,7 +86,43 @@ VK_SPACEBAR	EQU		000000020h
 	  BYTE   '               ||=================                ==================||',0ah,0dh
 	  BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
 	  BYTE   '                =====================================================',0,0ah,0dh
+	GAME_END_P1 BYTE '  ',0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||                  __                               ||',0ah,0dh
+	BYTE   '               ||                 |  )          |                   ||',0ah,0dh
+	BYTE   '               ||                 |￣           |                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                       _____                       ||',0ah,0dh
+	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
+	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
+	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||===================================================||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
 
+	GAME_END_P2 BYTE '  ',0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||                  __         __                    ||',0ah,0dh
+	BYTE   '               ||                 |__)        __|                   ||',0ah,0dh
+	BYTE   '               ||                 |          |__                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                       _____                       ||',0ah,0dh
+	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
+	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
+	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||===================================================||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
 
 ;/*GAME_MENU BYTE 'Game Menu :',0ah,0dh
 ;			  BYTE 'Press R to Read the game rule', 0ah, 0dh
@@ -204,7 +240,11 @@ main PROC
 			jmp menu
 		.ENDIF
 		
-
+		; 新增檢查分數的條件
+		cmp P1_Score, 5
+		jge endGame1
+		cmp P2_Score, 5
+		jge endGame2
 
 		.IF tamp==0
 			mov tamp, 5
@@ -281,7 +321,28 @@ main PROC
 
 		jmp gameloop ;防止白癡亂按其他按鈕
 
-		moveLeft:
+		endGame1:
+			; 結束遊戲處理
+			call Clrscr
+			; 顯示結束訊息
+			mov edx, OFFSET GAME_END_P1
+			call WriteString
+			; 等待玩家按下任意鍵退出
+			call ReadChar
+			jmp exitGame
+		endGame2:
+			; 結束遊戲處理
+			call Clrscr
+			; 顯示結束訊息
+			mov edx, OFFSET GAME_END_P2
+			call WriteString
+			; 等待玩家按下任意鍵退出
+			call ReadChar
+			jmp exitGame
+
+
+
+				moveLeft:
 
 			;確認是player1還是player2
 			cmp inputChar, 'j'
