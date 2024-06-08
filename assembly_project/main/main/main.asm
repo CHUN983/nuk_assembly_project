@@ -43,7 +43,7 @@ VK_SPACEBAR	EQU		000000020h
 	BYTE   '               ||       **MAX 7 CHARCHTERS FOR EACH PLAYER**       ||',0ah,0dh
 	BYTE   '               ||                                                  ||',0ah,0dh
 	BYTE   '                ====================================================',0ah,0dh
-	BYTE   '$ press c to be continue',0,0ah,0dh 
+	BYTE   '$ press Enter to be continue',0,0ah,0dh 
 
 	GAME_MENU BYTE '  ',0ah,0dh
 	BYTE   '                =====================================================',0ah,0dh
@@ -51,6 +51,7 @@ VK_SPACEBAR	EQU		000000020h
 	BYTE   '               ||          / \ / \    ----   | \ |   |   |          ||',0ah,0dh
 	BYTE   '               ||         /   V   \   ----   |  \|   \___/          ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||              Please enter your name.              ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                  P1:__________                    ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
@@ -58,8 +59,9 @@ VK_SPACEBAR	EQU		000000020h
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||=================                 =================||',0ah,0dh
-	BYTE   '               || press x to exit |               | press r to RULE ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||==================       ==========================||',0ah,0dh
+	BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
 	BYTE   '                =====================================================',0,0ah,0dh
 	
 
@@ -79,8 +81,8 @@ VK_SPACEBAR	EQU		000000020h
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||=================                ==================||',0ah,0dh
-	BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
+	BYTE   '               ||==================       ==========================||',0ah,0dh
+	BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
 	BYTE   '                =====================================================',0,0ah,0dh
 
 
@@ -99,8 +101,8 @@ VK_SPACEBAR	EQU		000000020h
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||=================                ==================||',0ah,0dh
-	BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
+	BYTE   '               ||==================       ==========================||',0ah,0dh
+	BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
 	BYTE   '                =====================================================',0,0ah,0dh
 
 	GAME_END_P2 BYTE '  ',0ah,0dh
@@ -118,8 +120,8 @@ VK_SPACEBAR	EQU		000000020h
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||=================                ==================||',0ah,0dh
-	BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
+	BYTE   '               ||==================       ==========================||',0ah,0dh
+	BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
 	BYTE   '                =====================================================',0,0ah,0dh
 ;/*GAME_MENU BYTE 'Game Menu :',0ah,0dh
 ;			  BYTE 'Press R to Read the game rule', 0ah, 0dh
@@ -140,6 +142,9 @@ VK_SPACEBAR	EQU		000000020h
 
 	GAME_MID_GROUND BYTE  '-----------------------------------------------------------',0,0ah, 0dh
 
+	GAME_buttom_GROUND BYTE  '            ===================                                        ===================',0ah,0dh
+					   BYTE  '           || press x to exit ||                                      || press m to menu ||',0ah,0dh
+					   BYTE  '            ===================                                        ===================',0,0ah,0dh
 	inputChar BYTE ?
 
 	player BYTE "*****",0
@@ -177,6 +182,9 @@ VK_SPACEBAR	EQU		000000020h
 	;-------------------------------------------------------------------------------------------
 
 	word_test Dword 0
+
+
+
 .code
 main PROC
 
@@ -186,10 +194,10 @@ main PROC
 	homeLoop:
 		call ReadChar
 		mov inputChar, al
-		cmp inputChar, "c"
-		je menu
-		
+		cmp inputChar, 0Dh    
+		je gamerule
 	jmp homeLoop
+
     menu:
 	call Clrscr
 	call GameMenuUI
@@ -197,9 +205,9 @@ main PROC
 	mov inputChar, al
 	cmp inputChar, "r"
 	je gamerule
-	cmp inputChar, "c"
+	cmp inputChar, 0Dh
 	je game
-	cmp inputChar, "q"
+	cmp inputChar, "x"
 	je exitGame
 	jmp menu
 	
@@ -208,14 +216,58 @@ main PROC
 	call GameRuleUI
 	call ReadChar
 	mov inputChar, al
-	cmp inputChar, "r"
+	cmp inputChar, 0Dh
 	je menu
+	cmp inputChar, "x"
+	je exitGame
 	jmp gamerule
-	game:
-		call Clrscr
-		call GROUND
-		call BALL
 
+	p1win:
+	call Clrscr
+	call GAME_END_P1UI
+	call ReadChar
+	mov inputChar, al
+	cmp inputChar, 0Dh
+	je game
+	cmp inputChar, "x"
+	je exitGame
+	jmp p1win
+
+	game:
+	call Clrscr
+	call GROUND
+	call BALL
+			;重製player的位置
+			mov dl, xPos_player1
+			mov dh, yPos_player1
+			call Gotoxy
+			mov edx, OFFSET empty
+			call WriteString
+
+			mov xPos_player1, 48
+			mov yPos_player1, 28
+			mov dl, xPos_player1
+			mov dh, yPos_player1
+			call Gotoxy
+			mov edx, OFFSET player
+			call WriteString
+
+			;for player2
+			mov dl, xPos_player2
+			mov dh, yPos_player2
+			call Gotoxy
+			mov edx, OFFSET empty
+			call WriteString
+
+			mov xPos_player2, 48
+			mov yPos_player2, 6
+			mov dl, xPos_player2
+			mov dh, yPos_player2
+			call Gotoxy
+			mov edx, OFFSET player
+			call WriteString	
+
+	
 
 	gameLoop:	
 
@@ -247,7 +299,9 @@ main PROC
 			;當ball沒被接住時結束遊戲
 			.IF yPos_ball<6 || yPos_ball > 28
 				.IF xPos_ball > 42 && xPos_ball < 62
-					jmp GAME_STOP
+					jmp p1win
+					
+					
 				.ENDIF
 			.ENDIF
 		.ENDIF
@@ -461,7 +515,7 @@ GameMenuUI PROC
 	call WriteString
 
 	mov dl, 38
-	mov dh, 7
+	mov dh, 8
 	call Gotoxy
 
     mov edx,OFFSET p1name
@@ -469,7 +523,7 @@ GameMenuUI PROC
 	call ReadString
 	
 	mov dl, 38
-	mov dh, 9
+	mov dh, 10
 	call Gotoxy
 	
 
@@ -486,6 +540,18 @@ GameRuleUI PROC
 	ret
 GameRuleUI ENDP
 
+GAME_END_P1UI PROC
+	mov edx, OFFSET GAME_END_P1
+	call WriteString 
+	ret
+GAME_END_P1UI ENDP
+
+GAME_END_P2UI PROC
+	mov edx, OFFSET GAME_END_P2
+	call WriteString 
+	ret
+GAME_END_P2UI ENDP
+
 GROUND PROC
 	
 	;draw ground button and top (height:0~24, width: 1~?)
@@ -494,10 +560,17 @@ GROUND PROC
 	call Gotoxy
 	mov edx, OFFSET GAME_GROUND
 	CALL WriteString
+
 	MOV dl, 22
 	mov dh, 29
 	call GOtoxy
 	mov edx,OFFSET GAME_GROUND
+	call WriteString
+
+	mov dl,0
+	mov dh,31
+	call gotoxy
+	mov edx,OFFSET GAME_buttom_GROUND
 	call WriteString
 
 	;draw mid
@@ -547,15 +620,15 @@ GROUND PROC
 		mov edx, OFFSET player
 		call WriteString
 
-		;show name
+		;show player's name
 		mov dh, 10
-		mov dl, 80
+		mov dl, 90
 		call Gotoxy
 		mov edx,OFFSET p1name
 		call WriteString
 
-		mov dh, 20
-		mov dl, 80
+		mov dh, 23
+		mov dl, 90
 		call Gotoxy
 		mov edx,OFFSET p2name
 		call WriteString
