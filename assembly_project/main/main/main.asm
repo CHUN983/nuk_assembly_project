@@ -86,7 +86,43 @@ VK_SPACEBAR	EQU		000000020h
 	  BYTE   '               ||=================                ==================||',0ah,0dh
 	  BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
 	  BYTE   '                =====================================================',0,0ah,0dh
+	GAME_END_P1 BYTE '  ',0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||                  __                               ||',0ah,0dh
+	BYTE   '               ||                 |  )          |                   ||',0ah,0dh
+	BYTE   '               ||                 |￣           |                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                       _____                       ||',0ah,0dh
+	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
+	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
+	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||===================================================||',0ah,0dh
+	BYTE   '               ||press m to MENU |            | press space to enter||',0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
 
+	GAME_END_P2 BYTE '  ',0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||                  __         __                    ||',0ah,0dh
+	BYTE   '               ||                 |__)        __|                   ||',0ah,0dh
+	BYTE   '               ||                 |          |__                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                       _____                       ||',0ah,0dh
+	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
+	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
+	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||===================================================||',0ah,0dh
+	BYTE   '               ||press m to MENU |            | press space to enter||',0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
 
 ;/*GAME_MENU BYTE 'Game Menu :',0ah,0dh
 ;			  BYTE 'Press R to Read the game rule', 0ah, 0dh
@@ -205,7 +241,6 @@ main PROC
 		.ENDIF
 		
 
-
 		.IF tamp==0
 			mov tamp, 5
 			mov dl, xPos_ball
@@ -216,12 +251,13 @@ main PROC
 			.IF xPos_ball > 42 && xPos_ball < 62
 				.IF yPos_ball < 6
 					inc P2_Score
-					jmp GAME_STOP
+					jmp GAME_STOP_CHECK
 				.ENDIF
 				.IF yPos_ball > 28
 					inc P1_Score
-					jmp GAME_STOP
+					jmp GAME_STOP_CHECK
 				.ENDIF
+
 			.ENDIF
 		.ENDIF
 
@@ -281,7 +317,8 @@ main PROC
 
 		jmp gameloop ;防止白癡亂按其他按鈕
 
-		moveLeft:
+
+				moveLeft:
 
 			;確認是player1還是player2
 			cmp inputChar, 'j'
@@ -354,13 +391,27 @@ main PROC
 	stop:
 		jmp gameLoop
 
+	GAME_STOP_CHECK:
+		; 新增檢查分數的條件
+		.IF P1_Score == 5 || P2_Score ==5
+			call ENDGAME
+		.ENDIF
+
 	GAME_STOP:
 		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
 
 		INVOKE GetKeyState, VK_SPACE
 		.IF ah
-			
+			;如果遊戲結束的話，按space重新開始，分數刷新
+			.IF P1_Score ==5 || P2_score == 5
+				call ENDGAME
+				mov P1_Score,0
+				mov P2_Score,0
+				call game
+			.ENDIF
+
 			;重製球的位置與狀態
+			
 			mov dl, xPos_ball
 			mov dh, yPos_ball
 			call Gotoxy
@@ -396,6 +447,9 @@ main PROC
 		;確認是否返回
 		INVOKE GetKeyState, VK_M
 		.IF ah
+			;如果遊戲結束的話，按space重新開始，分數刷新
+			mov P1_Score,0
+			mov P2_Score,0
 			jmp MENU
 		.ENDIF
 
@@ -607,6 +661,22 @@ UPDATE_BALL PROC
 	pop eax
 	ret
 UPDATE_BALL ENDP
+
+ENDGAME PROC
+
+	; 結束遊戲處理
+	call Clrscr
+	; 顯示結束訊息
+	.IF	P1_Score == 5 
+		mov edx, OFFSET GAME_END_P1
+	.ENDIF 
+	.IF P2_Score == 5 
+		mov edx, OFFSET GAME_END_P2
+	.ENDIF
+	call WriteString
+
+	ret
+ENDGAME ENDP
 
 
 END main	
