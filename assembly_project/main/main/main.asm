@@ -318,7 +318,7 @@ main PROC
 		jmp gameloop ;防止白癡亂按其他按鈕
 
 
-				moveLeft:
+		moveLeft:
 
 			;確認是player1還是player2
 			cmp inputChar, 'j'
@@ -332,7 +332,9 @@ main PROC
 				mov dl, xPos_player1
 				mov dh, yPos_player1
 				mov esi,0			;0代表向左，xPos需要減1
+				push 4
 				call UPDATE_PLAYER
+				add esp, 4
 				mov xPos_player1, dl
 				mov yPos_player1, dh
 				jmp gameLoop
@@ -346,7 +348,9 @@ main PROC
 				mov dl, xPos_player2
 				mov dh, yPos_player2
 				mov esi,0			;0代表向左，xPos需要減1
+				push 4
 				call UPDATE_PLAYER
+				add esp, 4
 				mov xPos_player2, dl
 				mov yPos_player2, dh
 
@@ -368,7 +372,9 @@ main PROC
 				mov dl, xPos_player1
 				mov dh, yPos_player1
 				mov esi, 1			  ;1代表向右，xPos需要加1
+				push 4
 				call UPDATE_PLAYER
+				add esp, 4
 				mov xPos_player1, dl
 				mov yPos_player1, dh
 				jmp gameloop
@@ -381,7 +387,9 @@ main PROC
 				mov dl, xPos_player2
 				mov dh, yPos_player2
 				mov esi, 1			  ;1代表向右，xPos需要加1
+				push 4
 				call UPDATE_PLAYER
+				add esp, 4
 				mov xPos_player2, dl
 				mov yPos_player2, dh
 				
