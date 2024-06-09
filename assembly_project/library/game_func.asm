@@ -9,23 +9,27 @@ INCLUDE Irvine32.inc
 UPDATE_PLAYER PROC
 ;
 ;讓腳色移動的function
-;Receives: eax,edx,esi
+;Receives: eax,edx,esi,ebp
 ;Returns: edx
-;Last update: 5/15/24
+;Require: 需要先push角色寬度多大
+;Last update: 6/8/24
 ;-----------------------------------------------------------
 
 	;先消失，如果往左(a)，則右邊用空白覆蓋；向右則反之
+	push ebp
+	mov ebp, esp
 	push eax
 	push edx
+
 
 	cmp al, 'a'
 	je left_move
 	cmp al, 'j'
 	je left_move
 
-	sub dl, 4
+	sub dl, BYTE PTR [ebp+8]	
 	left_move:
-		add dl, 4
+		add dl, BYTE PTR [ebp+8]
 	call Gotoxy
 	mov al, " "
 	call WriteChar
@@ -48,7 +52,7 @@ UPDATE_PLAYER PROC
 		cmp esi, 0; 向左不變，直接執行Gotoxy
 		je  show_star
 
-		add dl, 4
+		add dl, BYTE PTR [ebp+8]
 
 		show_star:
 			call Gotoxy
@@ -58,6 +62,7 @@ UPDATE_PLAYER PROC
 		pop edx
 
 	pop eax
+	pop ebp
 	ret
 UPDATE_PLAYER ENDP
 
