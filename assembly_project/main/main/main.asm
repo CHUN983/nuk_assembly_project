@@ -71,6 +71,8 @@ VK_SPACEBAR	EQU		000000020h
 
 
 
+
+	GAME_RULE BYTE '  ',0ah,0dh
 	BYTE   '                =====================================================',0ah,0dh
 	BYTE   '               ||            __                     ___             ||',0ah,0dh
 	BYTE   '               ||           |__|    |  |    |       ___             ||',0ah,0dh
@@ -226,6 +228,52 @@ main PROC
 	je exitGame
 	jmp gamerule
 
+	p1win:
+	call Clrscr
+	call GAME_END_P1UI
+	call ReadChar
+	mov inputChar, al
+	cmp inputChar, 0Dh
+	je game
+	cmp inputChar, "x"
+	je exitGame
+	jmp p1win
+
+	game:
+	call Clrscr
+	call GROUND
+	call BALL
+			;重製player的位置
+			mov dl, xPos_player1
+			mov dh, yPos_player1
+			call Gotoxy
+			mov edx, OFFSET empty
+			call WriteString
+
+			mov xPos_player1, 48
+			mov yPos_player1, 28
+			mov dl, xPos_player1
+			mov dh, yPos_player1
+			call Gotoxy
+			mov edx, OFFSET player
+			call WriteString
+
+			;for player2
+			mov dl, xPos_player2
+			mov dh, yPos_player2
+			call Gotoxy
+			mov edx, OFFSET empty
+			call WriteString
+
+			mov xPos_player2, 48
+			mov yPos_player2, 6
+			mov dl, xPos_player2
+			mov dh, yPos_player2
+			call Gotoxy
+			mov edx, OFFSET player
+			call WriteString	
+
+	
 
 	p1win:
 	call Clrscr
@@ -301,11 +349,10 @@ main PROC
 			call UPDATE_BALL
 
 			;當ball沒被接住時結束遊戲
+			.IF yPos_ball<6 || yPos_ball > 28
+				.IF xPos_ball > 42 && xPos_ball < 62
+					jmp p1win
 
-			.IF xPos_ball > 42 && xPos_ball < 62
-				.IF yPos_ball < 6
-					inc P2_Score
-					jmp GAME_STOP_CHECK
 				.ENDIF
 				.IF yPos_ball > 28
 					inc P1_Score
@@ -565,6 +612,18 @@ GameRuleUI PROC
 	ret
 GameRuleUI ENDP
 
+GAME_END_P1UI PROC
+	mov edx, OFFSET GAME_END_P1
+	call WriteString 
+	ret
+GAME_END_P1UI ENDP
+
+GAME_END_P2UI PROC
+	mov edx, OFFSET GAME_END_P2
+	call WriteString 
+	ret
+GAME_END_P2UI ENDP
+
 
 GROUND PROC
 	
@@ -633,7 +692,6 @@ PLAYER_POS PROC
 	mov edx, OFFSET player
 	call WriteString
 
-
 	mov dh, 6
 	mov dl, 48
 	mov xPos_player2, dl
@@ -676,6 +734,7 @@ PLAYER_POS PROC
 	call Gotoxy
 	mov edx,OFFSET p2name
 	call WriteString
+
 
 
 	ret 
