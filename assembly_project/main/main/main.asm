@@ -32,41 +32,41 @@ VK_SPACEBAR	EQU		000000020h
 		StartData BYTE StartWidth*StartHeight dup(0)
     
 	GAME_START_STR BYTE '  ',0ah,0dh
-	  BYTE   '                ====================================================',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh                                        
-	  BYTE   '               ||            *   uuuuuu uu uuuuuu     *            ||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '               ||--------------------------------------------------||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '               ||   Please Enter the name of the first player      ||',0ah,0dh
-	  BYTE   '               ||                then press Enter                  ||',0ah,0dh   
-	  BYTE   '               ||   Please Enter the name of the second player     ||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '               ||         Then press Enter to start play           ||',0ah,0dh 
-	  BYTE   '               ||       **MAX 7 CHARCHTERS FOR EACH PLAYER**       ||',0ah,0dh
-	  BYTE   '               ||                                                  ||',0ah,0dh
-	  BYTE   '                ====================================================',0ah,0dh
+	BYTE   '                ====================================================',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh                                        
+	BYTE   '               ||            *   uuuuuu uu uuuuuu     *            ||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '               ||--------------------------------------------------||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '               ||   Please Enter the name of the first player      ||',0ah,0dh
+	BYTE   '               ||                then press Enter                  ||',0ah,0dh   
+	BYTE   '               ||   Please Enter the name of the second player     ||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '               ||         Then press Enter to start play           ||',0ah,0dh 
+	BYTE   '               ||       **MAX 7 CHARCHTERS FOR EACH PLAYER**       ||',0ah,0dh
+	BYTE   '               ||                                                  ||',0ah,0dh
+	BYTE   '                ====================================================',0ah,0dh
 	BYTE   '$ press Enter to be continue',0,0ah,0dh 
 
-	 GAME_MENU BYTE '  ',0ah,0dh
-	  BYTE   '                =====================================================',0ah,0dh
-	  BYTE   '               ||           ^   ^     ----   |\  |   |   |          ||',0ah,0dh                                        
-	  BYTE   '               ||          / \ / \    ----   | \ |   |   |          ||',0ah,0dh
-	  BYTE   '               ||         /   V   \   ----   |  \|   \___/          ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
+	GAME_MENU BYTE '  ',0ah,0dh
+	BYTE   '                =====================================================',0ah,0dh
+	BYTE   '               ||           ^   ^     ----   |\  |   |   |          ||',0ah,0dh                                        
+	BYTE   '               ||          / \ / \    ----   | \ |   |   |          ||',0ah,0dh
+	BYTE   '               ||         /   V   \   ----   |  \|   \___/          ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||              Please enter your name.              ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                  P1:__________                    ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                  P2:__________                    ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                  P1:__________                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                  P2:__________                    ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
+	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||==================       ==========================||',0ah,0dh
 	BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
-	  BYTE   '                =====================================================',0,0ah,0dh
+	BYTE   '                =====================================================',0,0ah,0dh
 	
 
 
@@ -332,7 +332,7 @@ main PROC
 			mov edx, OFFSET player
 			call WriteString	
 
-
+	
 
 	gameLoop:	
 
@@ -724,18 +724,18 @@ PLAYER_POS PROC
 	call WriteDec
 	
 
-		;show player's name
-		mov dh, 10
-		mov dl, 90
-		call Gotoxy
-		mov edx,OFFSET p1name
-		call WriteString
+	;show player's name
+	mov dh, 10
+	mov dl, 90
+	call Gotoxy
+	mov edx,OFFSET p1name
+	call WriteString
 
-		mov dh, 23
-		mov dl, 90
-		call Gotoxy
-		mov edx,OFFSET p2name
-		call WriteString
+	mov dh, 23
+	mov dl, 90
+	call Gotoxy
+	mov edx,OFFSET p2name
+	call WriteString
 
 
 	ret 
