@@ -70,42 +70,7 @@ VK_SPACEBAR	EQU		000000020h
 	
 
 
-	GAME_RULE BYTE '  ',0ah,0dh
-	  BYTE   '                =====================================================',0ah,0dh
-	  BYTE   '               ||            __                     ___             ||',0ah,0dh
-	  BYTE   '               ||           |__|    |  |    |       ___             ||',0ah,0dh
-	  BYTE   '               ||           |  \    \__/    |___    ___             ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||     1. Player 1 uses A and D keys                 ||',0ah,0dh
-	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||     2. Player 2 uses left and right arrow keys    ||',0ah,0dh
-	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||=================                ==================||',0ah,0dh
-	  BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
-	  BYTE   '                =====================================================',0,0ah,0dh
-	GAME_END_P1 BYTE '  ',0ah,0dh
-	BYTE   '                =====================================================',0ah,0dh
-	BYTE   '               ||                  __                               ||',0ah,0dh
-	BYTE   '               ||                 |  )          |                   ||',0ah,0dh
-	BYTE   '               ||                 |￣           |                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                       _____                       ||',0ah,0dh
-	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
-	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
-	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||===================================================||',0ah,0dh
-	BYTE   '               ||press m to MENU |            | press space to enter||',0ah,0dh
-=======
+
 	BYTE   '                =====================================================',0ah,0dh
 	BYTE   '               ||            __                     ___             ||',0ah,0dh
 	BYTE   '               ||           |__|    |  |    |       ___             ||',0ah,0dh
@@ -122,27 +87,8 @@ VK_SPACEBAR	EQU		000000020h
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||==================       ==========================||',0ah,0dh
 	BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
->>>>>>> UI
 	BYTE   '                =====================================================',0,0ah,0dh
 
-	GAME_END_P2 BYTE '  ',0ah,0dh
-	BYTE   '                =====================================================',0ah,0dh
-	BYTE   '               ||                  __         __                    ||',0ah,0dh
-	BYTE   '               ||                 |__)        __|                   ||',0ah,0dh
-	BYTE   '               ||                 |          |__                    ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                       _____                       ||',0ah,0dh
-	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
-	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
-	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||===================================================||',0ah,0dh
-	BYTE   '               ||press m to MENU |            | press space to enter||',0ah,0dh
-	BYTE   '                =====================================================',0,0ah,0dh
 
 	GAME_END_P1 BYTE '  ',0ah,0dh
 	BYTE   '                =====================================================',0ah,0dh
@@ -280,12 +226,6 @@ main PROC
 	je exitGame
 	jmp gamerule
 
-	game:
-		call Clrscr
-		call GROUND
-		call BALL
-		call PLAYER_POS
-
 
 	p1win:
 	call Clrscr
@@ -361,7 +301,7 @@ main PROC
 			call UPDATE_BALL
 
 			;當ball沒被接住時結束遊戲
-<<<<<<< HEAD
+
 			.IF xPos_ball > 42 && xPos_ball < 62
 				.IF yPos_ball < 6
 					inc P2_Score
