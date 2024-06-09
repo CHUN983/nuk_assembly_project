@@ -228,63 +228,26 @@ main PROC
 	je exitGame
 	jmp gamerule
 
-	p1win:
-	call Clrscr
-	call GAME_END_P1UI
-	call ReadChar
-	mov inputChar, al
-	cmp inputChar, 0Dh
-	je game
-	cmp inputChar, "x"
-	je exitGame
-	jmp p1win
-
-	game:
-	call Clrscr
-	call GROUND
-	call BALL
-			;重製player的位置
-			mov dl, xPos_player1
-			mov dh, yPos_player1
-			call Gotoxy
-			mov edx, OFFSET empty
-			call WriteString
-
-			mov xPos_player1, 48
-			mov yPos_player1, 28
-			mov dl, xPos_player1
-			mov dh, yPos_player1
-			call Gotoxy
-			mov edx, OFFSET player
-			call WriteString
-
-			;for player2
-			mov dl, xPos_player2
-			mov dh, yPos_player2
-			call Gotoxy
-			mov edx, OFFSET empty
-			call WriteString
-
-			mov xPos_player2, 48
-			mov yPos_player2, 6
-			mov dl, xPos_player2
-			mov dh, yPos_player2
-			call Gotoxy
-			mov edx, OFFSET player
-			call WriteString	
-
 	
 
 	p1win:
 	call Clrscr
-	call GAME_END_P1UI
-	call ReadChar
-	mov inputChar, al
-	cmp inputChar, 0Dh
-	je game
-	cmp inputChar, "x"
-	je exitGame
-	jmp p1win
+	.IF P1_Score == 5
+		call GAME_END_P1UI	
+	.ENDIF
+	.IF P2_Score == 5
+		call GAME_END_P2UI
+	.ENDIF
+	p_read_win:
+		call ReadChar
+		mov inputChar, al
+		cmp inputChar, 0Dh
+		mov P1_Score,0
+		mov P2_Score,0
+		je game
+		cmp inputChar, "x"
+		je exitGame
+	jmp p_read_win
 
 	game:
 	call Clrscr
@@ -349,9 +312,10 @@ main PROC
 			call UPDATE_BALL
 
 			;當ball沒被接住時結束遊戲
-			.IF yPos_ball<6 || yPos_ball > 28
-				.IF xPos_ball > 42 && xPos_ball < 62
-					jmp p1win
+			.IF xPos_ball > 42 && xPos_ball < 62
+				.IF yPos_ball<6
+					inc P2_Score
+					jmp GAME_STOP_CHECK
 
 				.ENDIF
 				.IF yPos_ball > 28
@@ -503,7 +467,7 @@ main PROC
 	GAME_STOP_CHECK:
 		; 新增檢查分數的條件
 		.IF P1_Score == 5 || P2_Score ==5
-			call ENDGAME
+			jmp p1win
 		.ENDIF
 
 	GAME_STOP:
@@ -711,7 +675,7 @@ PLAYER_POS PROC
 	mov eax, P1_SCORE
 	call WriteDec
 
-	mov dh, 20
+	mov dh, 23
 	mov dl, 90
 	call Gotoxy
 	mov edx,OFFSET p2name
@@ -721,20 +685,6 @@ PLAYER_POS PROC
 	mov eax, P2_Score
 	call WriteDec
 	
-
-	;show player's name
-	mov dh, 10
-	mov dl, 90
-	call Gotoxy
-	mov edx,OFFSET p1name
-	call WriteString
-
-	mov dh, 23
-	mov dl, 90
-	call Gotoxy
-	mov edx,OFFSET p2name
-	call WriteString
-
 
 
 	ret 
