@@ -1,0 +1,103 @@
+﻿  Assembling main.asm...
+c:\irvine\SmallWin.inc(10): error A2008: syntax error : .
+c:\irvine\SmallWin.inc(11): error A2008: syntax error : .
+c:\irvine\SmallWin.inc(12): error A2008: syntax error : .
+c:\irvine\SmallWin.inc(299): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(302): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(311): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(314): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(318): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(323): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(332): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(339): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(343): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(347): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(351): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(357): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(362): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(365): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(369): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(372): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(380): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(385): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(390): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(393): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(398): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(403): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(406): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(412): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(418): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(421): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(428): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(434): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(441): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(444): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(448): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(452): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(456): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(460): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(464): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(467): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(472): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(478): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(481): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(484): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(488): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(495): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(502): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(509): error A2008: syntax error : ,
+c:\irvine\SmallWin.inc(516): error A2008: syntax error : near
+c:\irvine\Irvine32.inc(23): error A2008: syntax error : ,
+c:\irvine\Irvine32.inc(67): error A2008: syntax error : ,
+c:\irvine\Irvine32.inc(72): error A2008: syntax error : ,
+c:\irvine\Irvine32.inc(77): error A2008: syntax error : ,
+c:\irvine\Irvine32.inc(83): error A2008: syntax error : ,
+c:\irvine\Irvine32.inc(88): error A2008: syntax error : ,
+c:\irvine\Irvine32.inc(94): error A2008: syntax error : ,
+c:\irvine\Irvine32.inc(100): error A2008: syntax error : ,
+main.asm(3): error A2008: syntax error : ,
+main.asm(186): error A2008: syntax error : INVOKE
+main.asm(187): error A2008: syntax error : IF
+main.asm(189): error A2008: syntax error : .
+main.asm(195): error A2008: syntax error : IF
+main.asm(202): error A2008: syntax error : .
+main.asm(203): error A2045: missing angle bracket or brace in literal
+main.asm(205): error A2008: syntax error : .
+main.asm(206): error A2008: syntax error : .
+main.asm(207): error A2008: syntax error : .
+main.asm(213): error A2008: syntax error : IF
+main.asm(218): error A2008: syntax error : INVOKE
+main.asm(219): error A2008: syntax error : IF
+main.asm(224): error A2008: syntax error : .
+main.asm(226): error A2008: syntax error : INVOKE
+main.asm(227): error A2008: syntax error : IF
+main.asm(231): error A2008: syntax error : .
+main.asm(233): error A2008: syntax error : .
+main.asm(235): error A2008: syntax error : IF
+main.asm(241): error A2008: syntax error : INVOKE
+main.asm(242): error A2008: syntax error : IF
+main.asm(248): error A2008: syntax error : .
+main.asm(250): error A2008: syntax error : INVOKE
+main.asm(251): error A2008: syntax error : IF
+main.asm(257): error A2008: syntax error : .
+main.asm(259): error A2008: syntax error : .
+main.asm(340): error A2008: syntax error : INVOKE
+main.asm(341): error A2008: syntax error : IF
+main.asm(384): error A2008: syntax error : .
+main.asm(388): error A2008: syntax error : Invoke
+main.asm(514): error A2070: invalid instruction operands
+main.asm(519): error A2008: syntax error : IF
+main.asm(521): error A2008: syntax error : .
+main.asm(522): error A2044: invalid character in file
+main.asm(524): error A2008: syntax error : .
+main.asm(525): error A2044: invalid character in file
+main.asm(527): error A2008: syntax error : .
+main.asm(535): error A2070: invalid instruction operands
+main.asm(536): error A2045: missing angle bracket or brace in literal
+main.asm(537): error A2070: invalid instruction operands
+main.asm(538): error A2008: syntax error : .
+main.asm(539): error A2008: syntax error : .
+main.asm(540): error A2070: invalid instruction operands
+main.asm(541): error A2008: syntax error : .
+main.asm(542): fatal error A1012: error count exceeds 100; stopping assembly
+C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: 命令 "ml64.exe /c /nologo /Zi /Fo"x64\Debug\main.obj" /I "c:\irvine" /W3 /errorReport:prompt  /Tamain.asm" 已結束，代碼為 1。
