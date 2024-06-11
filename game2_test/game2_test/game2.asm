@@ -21,6 +21,11 @@ GAME_GROUND BYTE   '=================================================',0,0ah,0dh
 GAME_SIDE_GROUND BYTE'||',0,0ah,0dh
 
 ;player
+xPos_player BYTE ?
+yPos_player BYTE ?
+xPos_player_head BYTE ?
+yPos_player_head BYTE ?
+
 PLAYER 	BYTE "***",0,0ah,0dh
 PLAYER_HEAD BYTE "*",0,0ah,0dh
 
@@ -40,6 +45,11 @@ inputChar BYTE ?
 
 ;bullet
 BULLET BYTE '@',0ah,0dh
+player1_time BYTE 0
+player2_time BYTE 0
+player_time BYTE 0
+xPos_bullet BYTE 20 DUP(?)
+yPos_bullet BYTE 20 DUP(?)
 
 ;信號，決定哪個可以動
 semaphore BYTE 0
@@ -67,43 +77,96 @@ main PROC
 
 		;依順序決定player1或player2，類似做context switch的概念
 		not semaphore
+
+		;將player1與player2的總子彈發射數加起來
+		mov al, player1_time
+		add al, player2_time
+		mov player_time, al
 		
 		;get user input
 		.IF semaphore==0
 			dec tamp
 
 			;for player1
-			mov ah, 0
+			;change player1 pos
+			mov al, xPos_player1
+			mov ah, yPos_player1
+			mov xPos_player, al
+			mov yPos_player, ah
+			;change player1_head pos
+			mov al, xPos_player1_head
+			mov ah, yPos_player1_head
+			mov xPos_player_head, al
+			mov yPos_player_head, ah
+
+
 			INVOKE GetKeyState, VK_W
 			.IF ah
 				mov inputChar,"w"
 				mov al, "w"
-				jmp moveUp
-
+				call moveUp
+				jmp update1
 			.ENDIF
 
 			INVOKE GetKeyState, VK_S
 			.IF ah
 				mov inputChar,"s"
 				mov al, "s"
-				jmp moveDown
-
+				call moveDown
+				jmp update1
 			.ENDIF
 
 			INVOKE GetKeyState, VK_A
 			.IF ah
 				mov inputChar,"a"
 				mov al, "a"
-				jmp moveLeft
-
+				call moveLeft
+				jmp update1
 			.ENDIF
 
 			INVOKE GetKeyState, VK_D
 			.IF ah
 				mov inputChar,"d"
 				mov al, "d"
-				jmp moveRight
+				call moveRight
+				jmp update1
 			.ENDIF
+
+			update1:
+			;update player pos
+			mov al, xPos_player
+			mov ah, yPos_player
+			mov xPos_player1, al
+			mov yPos_player1, ah
+			mov al, xPos_player_head
+			mov ah, yPos_player_head
+			mov xPos_player1_head, al
+			mov yPos_player1_head, ah
+
+			mov ah, 0
+			INVOKE GetKeyState, VK_SPACE
+			.IF ah && player1_time < 10 
+
+				inc player1_time
+
+				.IF inputChar == 'w'
+					push 0
+				.ENDIF
+				.IF inputChar == 'a'
+					push 1
+				.ENDIF
+				.IF inputChar == 's'
+					push 2
+				.ENDIF
+				.IF inputChar == 'd'
+					push 3
+				.ENDIF
+
+
+			.ENDIF
+			call ATTACK
+
+			jmp gameLoop
 
 		.ENDIF
 
@@ -111,63 +174,312 @@ main PROC
 			dec tamp
 
 		;for player2
+			;change player2 pos
+			mov al, xPos_player2
+			mov ah, yPos_player2
+			mov xPos_player, al
+			mov yPos_player, ah
+			;change player1_head pos
+			mov al, xPos_player2_head
+			mov ah, yPos_player2_head
+			mov xPos_player_head, al
+			mov yPos_player_head, ah
 			mov ah, 0
 
 			INVOKE GetKeyState, VK_UP
 			.IF ah
-				mov inputChar, "i"
-				mov al, "i"
-				jmp moveUp
+				mov inputChar, "w"
+				mov al, "w"
+				call moveUp
+				jmp update2
 			.ENDIF
 
 			INVOKE GetKeyState, VK_DOWN
 			.IF ah
-				mov inputChar, "k"
-				mov al, "k"
-				jmp moveDown
+				mov inputChar, "s"
+				mov al, "s"
+				call moveDown
+				jmp update2
 			.ENDIF
 
 			INVOKE GetKeyState, VK_LEFT
 			.IF ah
-				mov inputChar, "j"
-				mov al, "j"
-				jmp moveLeft
+				mov inputChar, "a"
+				mov al, "a"
+				call moveLeft
+				jmp update2
 			.ENDIF
 
 			INVOKE GetKeyState, VK_RIGHT
 			.IF ah
-				mov inputChar, "l"
-				mov al, "l"
-				jmp moveRight
+				mov inputChar, "d"
+				mov al, "d"
+				call moveRight
+				jmp update2
 			.ENDIF
+
+			update2:
+			;update player pos
+			mov al, xPos_player
+			mov ah, yPos_player
+			mov xPos_player2, al
+			mov yPos_player2, ah
+			mov al, xPos_player_head
+			mov ah, yPos_player_head
+			mov xPos_player2_head, al
+			mov yPos_player2_head, ah
 
 		.ENDIF
 
 	jmp gameloop ;防止白癡亂按其他按鈕
 
-	moveUp:
+	exitGame:
+		Invoke ExitProcess, 0
+main ENDP
+
+MOVEUP PROC
 		.IF inputChar=='w'
-			cmp yPos_player1, 5
-			jle gameloop
+			cmp yPos_player, 8
+			jle stop
 
-			mov dl, xPos_player1
-			mov dh, yPos_player1
+			mov dl, xPos_player
+			mov dh, yPos_player
+			;判斷投是否朝上(同一方向)
+			dec dh
+			.IF yPos_player_head < dh
+				mov dl, xPos_player
+				mov dh, yPos_player
+				;控制第一列
+				push 2
+				call UPDATE_PLAYER
+				add esp,4
+				push edx			;先把下一步的位置存起來
 
+				;控制第二列
+				mov dl, xPos_player_head
+				mov dh, yPos_player_head
+				add dh, 2
+				push 3
+				call Gotoxy
+				call UPDATE_PLAYER	
+				add esp, 4
+				mov xPos_player_head, dl
+				mov yPos_player_head, dh
+				sub yPos_player_head, 2
+
+				;控制第三列
+				mov dl, xPos_player
+				mov dh, yPos_player
+				add dl, 2
+
+				push 2
+				call Gotoxy
+				call UPDATE_PLAYER	
+				add esp, 4
+					
+				pop edx
+				mov xPos_player, dl
+				mov yPos_player, dh
+
+				jmp stop
+
+			.ENDIF
+
+			;------------------------------------------------------------
+			;沒有代表頭不在與方向同一位置
+
+			;因為頭向上，但頭原本在下，那只要動頭就好，所以要先存起來做判斷
+			mov esi, 0
+			.IF yPos_player_head > dh
+				mov esi,1
+			.ENDIF
+			;先清掉不同方向的頭
+			call CLEAR_HEAD
+
+			;把頭移到正確的位置
+			mov dl, xPos_player
+			mov dh, yPos_player
+			.IF esi == 1 
+				inc dl
+				sub dh, 2
+			.ENDIF
+			.IF esi == 0
+				inc dl
+				sub dh, 3
+			.ENDIF
+			mov xPos_player_head, dl
+			mov yPos_player_head, dh
+			call Gotoxy
+			mov al, "*"
+			call WriteChar
+
+			.IF esi==1
+				jmp stop
+			.ENDIF
+
+			;移動player本身
+			;先消失
+			mov dl, xPos_player
+			mov dh, yPos_player
+
+			call Gotoxy
+			mov al, " "
+			call writeChar
+			inc dl
+			call Gotoxy
+			mov al, " "
+			call writeChar
 			
+			dec yPos_player
+
+			;再出現
+			mov dl, xPos_player
+			mov dh, yPos_player
+			add dl, 2
+			mov ecx, 2
+			.WHILE ecx >0
+				call Gotoxy
+				mov al, "*"
+				call writeChar
+				dec dh
+				dec ecx
+			.ENDW
+			;------------------------------------------------------------
 		.ENDIF
-	moveDown:
-	moveLeft:
+
+		stop:
+
+		ret
+
+MOVEUP ENDP
+
+MOVEDOWN PROC
+		.IF inputChar=='s'
+			cmp yPos_player, 30
+			jge stop
+
+			mov dl, xPos_player
+			mov dh, yPos_player
+			;判斷投是否朝上(同一方向)
+
+			.IF yPos_player_head > dh
+				mov dl, xPos_player
+				mov dh, yPos_player
+				;控制第一列
+				push 2
+				call UPDATE_PLAYER
+				add esp,4
+				push edx			;先把下一步的位置存起來
+
+				;控制第二列
+				mov dl, xPos_player_head
+				mov dh, yPos_player_head
+				sub dh, 1
+				push 3
+				call Gotoxy
+				call UPDATE_PLAYER	
+				add esp, 4
+				mov xPos_player_head, dl
+				mov yPos_player_head, dh
+				add yPos_player_head, 1
+
+				;控制第三列
+				mov dl, xPos_player
+				mov dh, yPos_player
+				add dl, 2
+
+				push 2
+				call Gotoxy
+				call UPDATE_PLAYER	
+				add esp, 4
+
+				pop edx
+				mov xPos_player, dl
+				mov yPos_player, dh
+
+				jmp stop
+			.ENDIF
+
+			;------------------------------------------------------------
+			;沒有代表頭不在與方向同一位置
+
+			;因為頭向下，但頭原本在上，那只要動頭就好，所以要先存起來做判斷
+			mov esi, 0
+
+			inc yPos_player_head
+			.IF yPos_player_head < dh
+				mov esi,1
+			.ENDIF
+			dec yPos_player_head
+			;先清掉不同方向的頭
+			call CLEAR_HEAD
+
+			;把頭移到正確的位置
+			mov dl, xPos_player
+			mov dh, yPos_player
+			inc dl
+			inc dh
+
+			mov xPos_player_head, dl
+			mov yPos_player_head, dh
+			call Gotoxy
+			mov al, "*"
+			call WriteChar
+
+			.IF esi==1
+				jmp stop
+			.ENDIF
+
+			;移動player本身
+			;先消失
+			mov dl, xPos_player
+			mov dh, yPos_player
+
+			sub dh, 2
+			call Gotoxy
+			mov al, " "
+			call writeChar
+			inc dl
+			call Gotoxy
+			mov al, " "
+			call writeChar
+			
+			
+			;再出現
+			mov dl, xPos_player
+			mov dh, yPos_player
+			add dl, 2
+			mov ecx, 2
+			.WHILE ecx >0
+				call Gotoxy
+				mov al, "*"
+				call writeChar
+				dec dh
+				dec ecx
+			.ENDW
+
+			;------------------------------------------------------------
+
+			jmp stop
+
+		.ENDIF
+
+		stop:
+		ret
+MOVEDOWN ENDP
+
+MOVELEFT PROC
 
 		;確認是player1還是player2
 		.IF inputChar == 'a'
-			cmp xPos_player1, 33
-			jle gameloop
+			cmp xPos_player, 33
+			jle stop
 				
-			mov dl, xPos_player1
-			mov dh, yPos_player1
-			.IF xPos_player1_head < dl
-				mov dl, xPos_player1
-				mov dh, yPos_player1
+			mov dl, xPos_player
+			mov dh, yPos_player
+			.IF xPos_player_head < dl
+				mov dl, xPos_player
+				mov dh, yPos_player
 				mov esi,0			;0代表向左，xPos需要減1
 				;控制第一層
 				push 1
@@ -177,18 +489,18 @@ main PROC
 
 					
 				;控制第二層
-				mov dl, xPos_player1_head
-				mov dh, yPos_player1_head
+				mov dl, xPos_player_head
+				mov dh, yPos_player_head
 				push 2
 				call Gotoxy
 				call UPDATE_PLAYER	
 				add esp, 4
-				mov xPos_player1_head, dl
-				mov yPos_player1_head, dh
+				mov xPos_player_head, dl
+				mov yPos_player_head, dh
 
 				;控制第三層
-				mov dl, xPos_player1
-				mov dh, yPos_player1
+				mov dl, xPos_player
+				mov dh, yPos_player
 				sub dh, 2
 
 				push 1
@@ -197,10 +509,10 @@ main PROC
 				add esp, 4
 					
 				pop edx
-				mov xPos_player1, dl
-				mov yPos_player1, dh
+				mov xPos_player, dl
+				mov yPos_player, dh
 
-				jmp gameLoop
+				jmp stop
 			.ENDIF
 				
 			;------------------------------------------------------------
@@ -210,21 +522,21 @@ main PROC
 			call CLEAR_HEAD
 
 			;把頭移到正確的位置
-			mov dl, xPos_player1
+			mov dl, xPos_player
 			dec dl
-			mov dh, yPos_player1
+			mov dh, yPos_player
 			dec dh
-			mov xPos_player1_head, dl
-			mov yPos_player1_head, dh
+			mov xPos_player_head, dl
+			mov yPos_player_head, dh
 			call Gotoxy
 			mov al, "*"
 			call WriteChar
 
 			;移動player本身
 			;先消失
-			mov dl, xPos_player1
+			mov dl, xPos_player
 			add dl, 2
-			mov dh, yPos_player1
+			mov dh, yPos_player
 
 			call Gotoxy
 			mov al, " "
@@ -235,8 +547,8 @@ main PROC
 			call writeChar
 
 			;再出現
-			mov dl, xPos_player1
-			mov dh, yPos_player1
+			mov dl, xPos_player
+			mov dh, yPos_player
 			sub dh, 2
 			mov ecx, 2
 			L2:
@@ -247,22 +559,25 @@ main PROC
 			loop L2	
 			;------------------------------------------------------------
 
-			jmp gameLoop
+			jmp stop
 		.ENDIF
+	stop:
+		ret
+MOVELEFT ENDP
 
-	moveRight:
+MOVERIGHT PROC
 		.IF inputChar == 'd'
 			;先看看有沒有超過邊界，有的話直接跳
-			cmp xPos_player1, SIZEOF GAME_GROUND+22
-			jge gameLoop
+			cmp xPos_player, SIZEOF GAME_GROUND+22
+			jge stop
 
-			mov dl, xPos_player1
-			mov dh, yPos_player1
+			mov dl, xPos_player
+			mov dh, yPos_player
 			;當頭跟方向同向時
 			inc dl
-			.IF xPos_player1_head > dl
-				mov dl, xPos_player1
-				mov dh, yPos_player1
+			.IF xPos_player_head > dl
+				mov dl, xPos_player
+				mov dh, yPos_player
 				mov esi, 1			  ;1代表向右，xPos需要加1
 				;控制第一層
 				push 1
@@ -272,20 +587,20 @@ main PROC
 
 					
 				;控制第二層
-				mov dl, xPos_player1_head
-				mov dh, yPos_player1_head
+				mov dl, xPos_player_head
+				mov dh, yPos_player_head
 				sub dl, 2
 				push 2
 				call Gotoxy
 				call UPDATE_PLAYER	
 				add esp, 4
-				mov xPos_player1_head, dl
-				add xPos_player1_head, 2
-				mov yPos_player1_head, dh
+				mov xPos_player_head, dl
+				add xPos_player_head, 2
+				mov yPos_player_head, dh
 
 				;控制第三層
-				mov dl, xPos_player1
-				mov dh, yPos_player1
+				mov dl, xPos_player
+				mov dh, yPos_player
 				sub dh, 2
 
 				push 1
@@ -294,45 +609,45 @@ main PROC
 				add esp, 4
 					
 				pop edx
-				mov xPos_player1, dl
-				mov yPos_player1, dh
+				mov xPos_player, dl
+				mov yPos_player, dh
 
-				jmp gameLoop
+				jmp stop
 			.ENDIF
 			
 			;------------------------------------------------------------
 			;沒有代表頭不在與方向同一位置
 
-			;;因為頭向右，但頭原本在左，那只要動頭就好，所以要先存起來做判斷
-			.IF xPos_player1_head <dl
+			;因為頭向右，但頭原本在左，那只要動頭就好，所以要先存起來做判斷
+			.IF xPos_player_head <dl
 				mov esi,1
 			.ENDIF
 			;先清掉不同方向的頭
 			call CLEAR_HEAD
 
 			;把頭移到正確的位置
-			mov dl, xPos_player1
+			mov dl, xPos_player
 			add dl, 3
-			.IF esi == 1
+			.IF esi == 1		;長寬不一樣
 				sub dl, 3
 				add dl, 2
 			.ENDIF 
-			mov dh, yPos_player1
+			mov dh, yPos_player
 			dec dh
-			mov xPos_player1_head, dl
-			mov yPos_player1_head, dh
+			mov xPos_player_head, dl
+			mov yPos_player_head, dh
 			call Gotoxy
 			mov al, "*"
 			call WriteChar
 
 			.IF esi ==1
-				jmp gameLoop
+				jmp stop
 			.ENDIF
 
 			;移動player本身
 			;先消失
-			mov dl, xPos_player1
-			mov dh, yPos_player1
+			mov dl, xPos_player
+			mov dh, yPos_player
 
 			call Gotoxy
 			mov al, " "
@@ -342,11 +657,11 @@ main PROC
 			mov al, " "
 			call writeChar
 			
-			inc xPos_player1
+			inc xPos_player
 
 			;再出現
-			mov dl, xPos_player1
-			mov dh, yPos_player1
+			mov dl, xPos_player
+			mov dh, yPos_player
 			sub dh, 2
 			mov ecx, 2
 			.WHILE ecx >0
@@ -359,13 +674,15 @@ main PROC
 			;------------------------------------------------------------
 
 
-			jmp gameLoop
+			jmp stop
 		.ENDIF
 
+	stop:
+		ret
+MOVERIGHT ENDP
 
-	exitGame:
-		Invoke ExitProcess, 0
-main ENDP
+
+
 
 GROUND PROC
 
@@ -438,21 +755,25 @@ PLAYER_POS PROC
 	;player2
 
 	mov ecx, 2
-	mov dh, 5
+	mov dh, 8
 	mov dl, 48
 	mov xPos_player2, dl
 	mov yPos_player2, dh
-	draw_player2:
-		mov dl, xPos_player2
-		mov dh, yPos_player2
-		add dh, cl
-		call Gotoxy
-		mov edx, OFFSET player
-		call WriteString
-	loop draw_player2
+	call Gotoxy
+	mov edx, OFFSET player
+	call WriteString
+
+	mov dl, xPos_player2
+	mov dh, yPos_player2
+	dec dh
+	call Gotoxy
+	mov edx, OFFSET player
+	call WriteString
+
+	
 
 	mov dl, 49
-	mov dh, 8
+	mov dh, 9
 	mov xPos_player2_head, dl
 	mov yPos_player2_head, dh
 	call Gotoxy
@@ -464,13 +785,63 @@ PLAYER_POS ENDP
 
 CLEAR_HEAD PROC
 
-	mov dl, xPos_player1_head
-	mov dh, yPos_player1_head
+	mov dl, xPos_player_head
+	mov dh, yPos_player_head
 	call Gotoxy
 	mov al, " "
 	call WriteChar
 
 	ret
 CLEAR_HEAD ENDP
+
+ATTACK PROC
+	push ebp
+	mov ebp, esp
+	mov ecx, 0
+	mov cl, player_time
+	.IF cl ==0 
+		jmp stop
+	.ENDIF
+
+	mov eax, 0
+	
+	.WHILE ecx > 0
+		mov esi, [ebp+4*ecx+4]
+		mov dl, [xPos_bullet+eax]
+		mov dh, [yPos_bullet+eax]
+		call Gotoxy
+		mov edx, " "
+		call WriteString
+
+		mov dl, [xPos_bullet+eax]
+		mov dh, [yPos_bullet+eax]
+		.IF esi == 0
+			dec dh
+		.ENDIF
+		.IF esi == 1
+			dec dl
+		.ENDIF
+		.IF esi == 2
+			inc dh
+		.ENDIF
+		.IF esi == 3
+			inc dl
+		.ENDIF
+		mov [xPos_bullet+eax], dl
+		mov [yPos_bullet+eax], dh
+		call Gotoxy
+		mov edx, "@"
+		call WriteString
+
+
+		inc eax
+		dec ecx
+	.ENDW
+	
+	stop:
+
+		pop ebp
+		ret
+ATTACK ENDP
 
 END main

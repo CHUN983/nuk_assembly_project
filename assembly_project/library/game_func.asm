@@ -21,7 +21,38 @@ UPDATE_PLAYER PROC
 	push eax
 	push edx
 
+	.IF al == 'w'
+		call Gotoxy
+		mov al, " "
+		call WriteChar
 
+		sub dh, [ebp+8]
+		call Gotoxy
+		mov al,"*"
+		call WriteChar
+
+		pop edx
+		dec dh
+		jmp for_new_direction
+	.ENDIF
+
+	.IF al == 's'
+		dec dh
+		call Gotoxy
+		mov al, " "
+		call WriteChar
+
+		add dh, [ebp+8]
+		call Gotoxy
+		mov al,"*"
+		call WriteChar
+
+		pop edx
+		inc dh
+		jmp for_new_direction
+	.ENDIF
+
+	;常琌玡糶或禲痕ぃ笵
 	cmp al, 'a'
 	je left_move
 	cmp al, 'j'
@@ -60,6 +91,8 @@ UPDATE_PLAYER PROC
 			call WriteChar
 
 		pop edx
+
+	for_new_direction:
 
 	pop eax
 	pop ebp
@@ -593,7 +626,7 @@ SET_BALL_COLOR PROC
 	push edx
 	push eax
 	
-	mov eax,4           ;р︹跑计eax
+	mov eax,11           ;р︹跑计eax
 	call SetTextColor   ;call setcolorрeax倒setcolor
 	;mov edx,OFFSET the@ р跑计竚edx
 	pop eax
