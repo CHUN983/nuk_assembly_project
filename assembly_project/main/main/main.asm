@@ -85,50 +85,46 @@ VK_SPACEBAR	EQU		000000020h
 	  BYTE   '               ||     2. Player 2 uses left and right arrow keys    ||',0ah,0dh
 	  BYTE   '               ||        to move left and right.                    ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
+	  BYTE   '               ||     3. If you get 5 points, then you win!!!       ||',0ah,0dh
 	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||                                                   ||',0ah,0dh
-	  BYTE   '               ||=================                ==================||',0ah,0dh
-	  BYTE   '               || press r to MENU |              | press c to enter ||',0ah,0dh
+	  BYTE   '               ||==================       ==========================||',0ah,0dh
+	  BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
 	  BYTE   '                =====================================================',0,0ah,0dh
 
 
 	GAME_END_P1 BYTE '  ',0ah,0dh
-	BYTE   '                =====================================================',0ah,0dh
-	BYTE   '               ||                  __                               ||',0ah,0dh
-	BYTE   '               ||                 |__)          |                   ||',0ah,0dh
-	BYTE   '               ||                 |             |                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                       _____                       ||',0ah,0dh
-	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
-	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
-	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||==================       ==========================||',0ah,0dh
-	BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
-	BYTE   '                =====================================================',0,0ah,0dh
+	BYTE   '          =================================================================',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||                       ____            .__                     ||',0ah,0dh
+	BYTE   '         ||                ______/_   |   __  _  _|__| ____               ||',0ah,0dh
+	BYTE   '         ||                \____ \|   |   \ \/ \/ /  |/    \              ||',0ah,0dh
+	BYTE   '         ||                |  |_> >   |    \     /|  |   |  \             ||',0ah,0dh
+	BYTE   '         ||                |   __/|___|     \/\_/ |__|___|  /             ||',0ah,0dh
+	BYTE   '         ||                |__|                           \/              ||',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||===============================================================||',0ah,0dh
+	BYTE   '         || press x to exit || press m to menu || press Enter to continue ||',0ah,0dh
+	BYTE   '          =================================================================',0,0ah,0dh
 
 	GAME_END_P2 BYTE '  ',0ah,0dh
-	BYTE   '                =====================================================',0ah,0dh
-	BYTE   '               ||                  __         __                    ||',0ah,0dh
-	BYTE   '               ||                 |__)        __|                   ||',0ah,0dh
-	BYTE   '               ||                 |          |__                    ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                       _____                       ||',0ah,0dh
-	BYTE   '               ||           \   ^   /     |     |\  |               ||',0ah,0dh
-	BYTE   '               ||            \ / \ /      |     | \ |               ||',0ah,0dh
-	BYTE   '               ||             V   V     __|__   |  \|               ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||                                                   ||',0ah,0dh
-	BYTE   '               ||==================       ==========================||',0ah,0dh
-	BYTE   '               || press x to exit ||     || press Enter to continue ||',0ah,0dh
-	BYTE   '                =====================================================',0,0ah,0dh
+	BYTE   '          =================================================================',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||                     ________             .__                  ||',0ah,0dh
+	BYTE   '         ||              ______ \_____  \    __  _  _|__| ____            ||',0ah,0dh
+	BYTE   '         ||              \____ \ /  ____/    \ \/ \/ /  |/    \           ||',0ah,0dh
+	BYTE   '         ||              |  |_> >       \     \     /|  |   |  \          ||',0ah,0dh
+	BYTE   '         ||              |   __/\_______ \     \/\_/ |__|___|  /          ||',0ah,0dh
+	BYTE   '         ||              |__|           \/                   \/           ||',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||                                                               ||',0ah,0dh
+	BYTE   '         ||===============================================================||',0ah,0dh
+	BYTE   '         || press x to exit || press m to menu || press Enter to continue ||',0ah,0dh
+	BYTE   '          =================================================================',0,0ah,0dh
 ;/*GAME_MENU BYTE 'Game Menu :',0ah,0dh
 ;			  BYTE 'Press R to Read the game rule', 0ah, 0dh
 ;			  BYTE 'Press D to increase the speed of the ball.', 0ah, 0dh
@@ -148,9 +144,10 @@ VK_SPACEBAR	EQU		000000020h
 
 	GAME_MID_GROUND BYTE  '-----------------------------------------------------------',0,0ah, 0dh
 
-	GAME_buttom_GROUND BYTE  '            ===================                                        ===================',0ah,0dh
-					   BYTE  '           || press x to exit ||                                      || press m to menu ||',0ah,0dh
-					   BYTE  '            ===================                                        ===================',0,0ah,0dh
+	GAME_buttom_GROUND BYTE  '            ===================                                ===========================',0ah,0dh
+					   BYTE  '           || press x to exit ||                              || press space to continue ||',0ah,0dh
+					   BYTE  '            ===================                                ===========================',0,0ah,0dh
+
 	inputChar BYTE ?
 
 	player BYTE "*****",0
@@ -209,8 +206,6 @@ main PROC
 	call GameMenuUI
 	call ReadChar
 	mov inputChar, al
-	cmp inputChar, "r"
-	je gamerule
 	cmp inputChar, 0Dh
 	je game
 	cmp inputChar, "x"
@@ -241,12 +236,14 @@ main PROC
 	p_read_win:
 		call ReadChar
 		mov inputChar, al
-		cmp inputChar, 0Dh
 		mov P1_Score,0
 		mov P2_Score,0
+		cmp inputChar, 0Dh
 		je game
 		cmp inputChar, "x"
 		je exitGame
+		cmp inputChar, "m"
+		je menu
 	jmp p_read_win
 
 	game:
@@ -579,12 +576,30 @@ GameRuleUI ENDP
 GAME_END_P1UI PROC
 	mov edx, OFFSET GAME_END_P1
 	call WriteString 
+	mov dl, 41
+	mov dh, 3
+	call Gotoxy
+	mov eax, P1_SCORE
+	call WriteDec
+	mov al, present_score
+	call WriteChar
+	mov eax, P2_SCORE
+	call WriteDec
 	ret
 GAME_END_P1UI ENDP
 
 GAME_END_P2UI PROC
 	mov edx, OFFSET GAME_END_P2
 	call WriteString 
+	mov dl, 41
+	mov dh, 3
+	call Gotoxy
+	mov eax, P1_SCORE
+	call WriteDec
+	mov al, present_score
+	call WriteChar
+	mov eax, P2_SCORE
+	call WriteDec
 	ret
 GAME_END_P2UI ENDP
 
