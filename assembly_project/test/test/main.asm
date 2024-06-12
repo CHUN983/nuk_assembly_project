@@ -1252,6 +1252,7 @@ BYTE ' ',0,0ah,0dh
 
 main PROC
 
+<<<<<<< HEAD
     call GAME_START
     Invoke ExitProcess, 0
 main endp
@@ -1260,6 +1261,9 @@ main endp
 
 
 GAME_START PROC
+=======
+
+>>>>>>> main
 loop1:
     
     mov ah, 0 ;ah清0給getkeystate判斷是否輸入
@@ -1526,11 +1530,16 @@ INVOKE GetKeyState, VK_X
 jmp loop1
 
 stop1:
+<<<<<<< HEAD
     call clrscr
 
 
     ret
 GAME_START ENDP
 
+=======
+    Invoke ExitProcess, 0
+main endp
+>>>>>>> main
 
 end main
