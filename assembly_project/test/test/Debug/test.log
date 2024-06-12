@@ -1,5 +1,2 @@
-<<<<<<< HEAD
-﻿C:\sunthing\assembly\assembly_project\test\test\test.vcxproj : error MSB4025: 無法載入專案檔。找不到檔案 'C:\sunthing\assembly\assembly_project\test\test\test.vcxproj'。
-=======
-﻿  test.vcxproj -> C:\sunthing\assembly\assembly_project\test\Debug\test.exe
->>>>>>> main
+﻿  Assembling main.asm...
+  test.vcxproj -> C:\sunthing\assembly\assembly_learning\test\Debug\test.exe

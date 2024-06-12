@@ -10,7 +10,7 @@ PlaySound PROTO,
 	SND_RESOURCE DWORD 00040005h
 	SND_FILENAME DWORD 00020000h
 	SND_ASYNC DWORD 0001h
-	gameMusic BYTE "Never_give_you_up.mp3",0
+	gameMusic BYTE "Never_give_you_up.wav",0
 
 .code
 main proc

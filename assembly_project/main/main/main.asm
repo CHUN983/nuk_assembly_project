@@ -1,4 +1,9 @@
 include game_func.inc
+INCLUDELIB Winmm.lib
+PlaySound PROTO,
+        pszSound:PTR BYTE, 
+        hmod:DWORD, 
+        fdwSound:DWORD
 
 GetKeyState PROTO, nVirtkey:DWORD ; Get keyboard inputs
 
@@ -16,6 +21,14 @@ VK_ENTER	EQU		00000000Dh
 VK_SPACEBAR	EQU		000000020h
 
 .data
+	;sound------------------------------------
+	SND_ALIAS    DWORD 00010000h
+	SND_RESOURCE DWORD 00040005h
+	SND_FILENAME DWORD 00020000h
+	SND_ASYNC DWORD 0001h
+	gameMusic BYTE "Never_give_you_up.wav",0
+	;---------------------------------------
+
 	;player name
 		p1name BYTE 100 DUP(0)
 		p2name BYTE 100 DUP(0)
@@ -192,12 +205,13 @@ VK_SPACEBAR	EQU		000000020h
 main PROC
 
 	;Draw ground
-	mov edx, OFFSET GAME_START_STR 
-	call WriteString
 	homeLoop:
-		call GAME_START
+		
+	call GAME_START
+		
 
     menu:
+	invoke PlaySound, OFFSET gameMusic, 0, 00000008h
 	call Clrscr
 	call GameMenuUI
 	call ReadChar

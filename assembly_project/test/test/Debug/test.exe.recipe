@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\sunthing\assembly\assembly_project\test\Debug\test.exe</FullPath>
+      <FullPath>C:\sunthing\assembly\assembly_learning\test\Debug\test.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
