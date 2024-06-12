@@ -53,7 +53,7 @@ VK_SPACEBAR	EQU		000000020h
 	BYTE   '                =====================================================',0ah,0dh
 	BYTE   '               ||           ^   ^     ----   |\  |   |   |          ||',0ah,0dh                                        
 	BYTE   '               ||          / \ / \    ----   | \ |   |   |          ||',0ah,0dh
-	BYTE   '               ||       | '_ ` _ \ / _ \ '_ \| | | |        ||',0ah,0dh
+	BYTE   '               ||         /   V   \   ----   |  \|   \___/          ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
 	BYTE   '               ||              Please enter your name.              ||',0ah,0dh
 	BYTE   '               ||                                                   ||',0ah,0dh
