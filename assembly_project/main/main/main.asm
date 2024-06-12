@@ -22,10 +22,7 @@ VK_SPACEBAR	EQU		000000020h
 
 .data
 	;sound------------------------------------
-	SND_ALIAS    DWORD 00010000h
-	SND_RESOURCE DWORD 00040005h
-	SND_FILENAME DWORD 00020000h
-	SND_ASYNC DWORD 0001h
+
 	gameMusic BYTE "Never_give_you_up.wav",0
 	;---------------------------------------
 
@@ -206,12 +203,14 @@ main PROC
 
 	;Draw ground
 	homeLoop:
-		
+	invoke PlaySound, OFFSET gameMusic, 0, 20001h
+	mov eax, 200
+	call delay
 	call GAME_START
-		
+	jmp gamerule
 
     menu:
-	invoke PlaySound, OFFSET gameMusic, 0, 00000008h
+	
 	call Clrscr
 	call GameMenuUI
 	call ReadChar
