@@ -1,5 +1,4 @@
-INCLUDE Irvine32.inc
-
+include irvine32.inc
 VK_LEFT		EQU		000000025h
 VK_UP		EQU		000000026h
 VK_RIGHT	EQU		000000027h
@@ -12,9 +11,9 @@ VK_X		EQU		000000058h
 VK_M		EQU		00000004Dh
 VK_ENTER	EQU		00000000Dh
 VK_SPACEBAR	EQU		000000020h
-
 .data
-
+	
+	
 	arr1 BYTE '  ',0ah,0dh
     BYTE 'ttfttttttttttttttttffLfttffttfffttttt1111111111111tffffftttt111111111111111tttffttftttttttt11111tttt',0ah,0dh
     BYTE 'ttttttttttttttttffffLftttfffffffffftt11111iii1i11ffffffffttttttt111111tttttffffftfLLfttttttt111ttttt',0ah,0dh
@@ -1251,919 +1250,287 @@ BYTE ' ',0,0ah,0dh
 
 .code
 
-;-----------------------------------------------------------
-UPDATE_PLAYER PROC
-;
-;Åý¸}¦â²¾°Êªºfunction
-;Receives: eax,edx,esi,ebp
-;Returns: edx
-;Require: »Ý­n¥ýpush¨¤¦â¼e«×¦h¤j
-;Last update: 6/8/24
-;-----------------------------------------------------------
+main PROC
 
-	;¥ý®ø¥¢¡A¦pªG©¹¥ª(a)¡A«h¥kÃä¥ÎªÅ¥ÕÂÐ»\¡F¦V¥k«h¤Ï¤§
-	push ebp
-	mov ebp, esp
-	push eax
-	push edx
-
-	.IF al == 'w'
-		call Gotoxy
-		mov al, " "
-		call WriteChar
-
-		sub dh, [ebp+8]
-		call Gotoxy
-		mov al,"*"
-		call WriteChar
-
-		pop edx
-		dec dh
-		jmp for_new_direction
-	.ENDIF
-
-	.IF al == 's'
-		dec dh
-		call Gotoxy
-		mov al, " "
-		call WriteChar
-
-		add dh, [ebp+8]
-		call Gotoxy
-		mov al,"*"
-		call WriteChar
-
-		pop edx
-		inc dh
-		jmp for_new_direction
-	.ENDIF
-
-	;¤U­±³£¬O¥H«e¼gªº¡A¥L­Ì«ç»ò¶]ºÛ¤£ª¾¹D
-	cmp al, 'a'
-	je left_move
-	cmp al, 'j'
-	je left_move
-
-	sub dl, BYTE PTR [ebp+8]	
-	left_move:
-		add dl, BYTE PTR [ebp+8]
-	call Gotoxy
-	mov al, " "
-	call WriteChar
-
-	;«á¥X²{¡A¦pªG¬O¦V¥ª¡A«h¥ªÃä¥X²{*
-	cmp esi,0
-	je decrease_xPos
-
-	increase_xPos:
-		pop edx
-		inc dl
-		jmp draw_player
-
-	decrease_xPos:
-		pop edx
-		dec dl
-
-	draw_player:
-		push edx   ; ¬°¤F¥X²{*¡A¦]¦¹¦ì¸m¥u¬O¼È¦s¡A¤§«á­nµ¹ÅÜ¼Æpos
-		cmp esi, 0; ¦V¥ª¤£ÅÜ¡Aª½±µ°õ¦æGotoxy
-		je  show_star
-
-		add dl, BYTE PTR [ebp+8]
-
-		show_star:
-			call Gotoxy
-			mov al, "*"
-			call WriteChar
-
-		pop edx
-
-	for_new_direction:
-
-	pop eax
-	pop ebp
-	ret
-UPDATE_PLAYER ENDP
+    call GAME_START
+    Invoke ExitProcess, 0
+main endp
 
 
-;------------------------------------------------------------------
-;Åýball«ö·Óebx¤Wªºstate²¾°Ê¡A²¾°Ê§¹«á¬Ý¬O§_¶W¥X¥h¡A¶W¹Lesi³]©w¬°1
-;receives: eax, ebx, edx, esi, ebp
-;return: edx, esi, [epb+12](for path)
-;require: edxªº­È¥²¶·¬Oballªº¦ì¸m!
-BALL_MOVE PROC
-;---------------------------------------------------------------------
-	push eax
-	push ebp
-	mov ebp, esp
-
-    cmp eax, 1
-    je EAX_1
-    cmp eax, 2
-    je EAX_2
-    cmp eax, 3
-    je EAX_3
-    cmp eax, 4
-    je EAX_4
-    cmp eax, 5
-    je EAX_5
-    cmp eax, 6
-    je EAX_6
-    cmp eax, 7
-    je EAX_7
-    cmp eax, 8
-    je EAX_8
-    cmp eax, 9
-    je EAX_9
-    cmp eax, 10
-    je EAX_10
-    cmp eax, 11
-    je EAX_11
-    cmp eax, 12
-    je EAX_12
-    cmp eax, 13
-    je EAX_13
-    cmp eax, 14
-    je EAX_14
-    jmp STOP
-
-	EAX_1:    ; ¤W¤W
-		add dh, 2
-		jmp STOP
-
-	EAX_2:    ; ¤W¤W¥k
-		add dh, 2
-		add dl, 1
-		jmp STOP
-
-	EAX_3:    ; ¤W¥k
-		add dh, 1
-		add dl, 1
-		jmp STOP
-
-	EAX_4:    ; ¤W¥k¥k
-		add dh, 1
-		add dl, 2
-		jmp STOP
-
-	EAX_5:    ; ¤W¤W¥ª
-		add dh, 2
-		sub dl, 1
-		jmp STOP
-
-	EAX_6:    ; ¤W¥ª
-		add dh, 1
-		sub dl, 1
-		jmp STOP
-
-	EAX_7:    ; ¤W¥ª¥ª
-		add dh, 1
-		sub dl, 2
-		jmp STOP
-
-	EAX_8:    ; ¤U¤U
-		sub dh, 2
-		jmp STOP
-
-	EAX_9:    ; ¤U¤U¥k
-		sub dh, 2
-		add dl, 1
-		jmp STOP
-
-	EAX_10:   ; ¤U¥k
-		sub dh, 1
-		add dl, 1
-		jmp STOP
-
-	EAX_11:   ; ¤U¥k¥k
-		sub dh, 1
-		add dl, 2
-		jmp STOP
-
-	EAX_12:   ; ¤U¤U¥ª
-		sub dh, 2
-		sub dl, 1
-		jmp STOP
-
-	EAX_13:   ; ¤U¥ª
-		sub dh, 1
-		sub dl, 1
-		jmp STOP
-
-	EAX_14:   ; ¤U¥ª¥ª
-		sub dh, 1
-		sub dl, 2
-		jmp STOP
-
-	;»Ý­n­pºâ¨â­Ó¡A¶W¥XÃä¬É©Î¸I¨ìplayer
-	STOP:
-		player:
-		;­pºâ¬O§_¸I¨ìplayer
-			.IF dh >= 28
-				mov ebx, [ebp+16]				;x_Pos
-				and ebx, 00FFh
-				.IF dl >= bl 
-					add bl, 4
-					.IF dl <= bl
-						mov dh, 27
-						mov esi, 1
-						mov bl,BYTE PTR [ebp+20] ;press right or left or not
-						mov WORD PTR [ebp+12], 0 ;path
-						.IF bl=='a'
-							mov WORD PTR [ebp+12], 3
-						.ENDIF
-						.IF bl=='d'
-							mov WORD PTR [ebp+12], 2
-						.ENDIF
-					.ENDIF
-				.ENDIF
-			.ENDIF
-
-			.IF dh <= 6
-				mov ebx, [ebp+16]
-				and ebx, 00FFh
-				.IF dl >= bl
-					add bl, 4
-					.IF dl <= bl
-						mov dh, 7
-						mov esi, 1
-						mov bl,BYTE PTR [ebp+20] ;press right or left or not
-						mov WORD PTR [ebp+12], 0
-						.IF bl=='j'
-							mov WORD PTR [ebp+12], 3
-						.ENDIF
-						.IF bl=='l'
-							mov WORD PTR [ebp+12], 2
-						.ENDIF
-					.ENDIF
-				.ENDIF
-			.ENDIF
-
-		;­pºâ¬O§_¶W¥XÃä¬É
-		border:
-			;Ãä¬É¤Wªº§PÂ_
-			.IF dh >= 29
-				.IF dl<=42 || dl>=61
-					mov dh, 28
-					mov esi, 1
-					mov WORD PTR [ebp+12], 0 ; ­×§ïpath
-				.ENDIF
-			.ENDIF
-			.IF dh <= 5
-				.IF dl<=42 || dl >=61
-					mov dh, 6
-					mov esi, 1
-					mov WORD PTR [ebp+12], 0
-				.ENDIF
-			.ENDIF
-			.IF dl >= 5+75
-				mov dl, 5+74
-				mov esi, 1
-				mov WORD PTR [ebp+12], 1
-			.ENDIF
-			.IF dl <= 21
-				mov dl, 22
-				mov esi,1
-				mov WORD PTR [ebp+12], 1
-			.ENDIF
-
-		continue:
-	pop ebp
-	pop eax
-
-	ret
-BALL_MOVE ENDP
-
-;---------------------------------------------------------------------------
-;·í²y¸I¨ìÀð¾À©Îplayer®É¡A§PÂ_¥Lªº¼²À»ª¬ºA¬O¤°»ò(ex.¾î¦VÀð¾À¡Aª½¦VÀð¾À)¡A
-;¨Ã¨Ì¤£¦P®É­Ô¬Û¹ïÀ³ªºª¬ºAÅÜ¤Æ
-;receivers:eax, ebp
-;return: eax¡Astate¤]·|¸òµÛÅÜ([ebp+12])
-;require: »Ý­n¥ý¤Þ¤Jpath¸òstate¡A³Ì«á­n¥Îpopªº¤è¦¡§â­È¦s¦^path¸òstate
-BALL_STATE PROC
-;----------------------------------------------------------------------------
-	push ebp
-	mov ebp, esp
-	;§PÂ_ªO¤l©¹¥kÁÙ¬O©¹¥ªÁÙ¬O¨S°Ê
-	mov eax, [ebp+12]			 ;mov eax, path
-	cmp eax, 0
-	je PATH_0
-	cmp eax, 1
-	je PATH_1
-	cmp eax, 2
-	je PATH_2
-	cmp eax, 3
-	je PATH_3
-	jmp CONTINUE
-
-	PATH_0:    ; ¦pªG¬O?¦VÀR¤î
-		mov eax, [ebp+8]	  ;mov eax, state
-		cmp eax, 1
-		je STATE_1_0
-		cmp eax, 2
-		je STATE_2_0
-		cmp eax, 3
-		je STATE_3_0
-		cmp eax, 4
-		je STATE_4_0
-		cmp eax, 5
-		je STATE_5_0
-		cmp eax, 6
-		je STATE_6_0
-		cmp eax, 7
-		je STATE_7_0
-		cmp eax, 8
-		je STATE_8_0
-		cmp eax, 9
-		je STATE_9_0
-		cmp eax, 10
-		je STATE_10_0
-		cmp eax, 11
-		je STATE_11_0
-		cmp eax, 12
-		je STATE_12_0
-		cmp eax, 13
-		je STATE_13_0
-		cmp eax, 14
-		je STATE_14_0
-		jmp CONTINUE
-
-	STATE_1_0:
-		mov eax, 8
-		jmp CONTINUE
-	STATE_2_0:
-		mov eax, 9
-		jmp CONTINUE
-	STATE_3_0:
-		mov eax, 10
-		jmp CONTINUE
-	STATE_4_0:
-		mov eax, 11
-		jmp CONTINUE
-	STATE_5_0:
-		mov eax, 12
-		jmp CONTINUE
-	STATE_6_0:
-		mov eax, 13
-		jmp CONTINUE
-	STATE_7_0:
-		mov eax, 14
-		jmp CONTINUE
-	STATE_8_0:
-		mov eax, 1
-		jmp CONTINUE
-	STATE_9_0:
-		mov eax, 2
-		jmp CONTINUE
-	STATE_10_0:
-		mov eax, 3
-		jmp CONTINUE
-	STATE_11_0:
-		mov eax, 4
-		jmp CONTINUE
-	STATE_12_0:
-		mov eax, 5
-		jmp CONTINUE
-	STATE_13_0:
-		mov eax, 6
-		jmp CONTINUE
-	STATE_14_0:
-		mov eax, 7
-		jmp CONTINUE
-
-	PATH_1:    ; ¦pªG¬Oª½¦VÀR¤î
-		mov eax, [ebp+8]
-		cmp eax, 1
-		je STATE_1_1
-		cmp eax, 2
-		je STATE_2_1
-		cmp eax, 3
-		je STATE_3_1
-		cmp eax, 4
-		je STATE_4_1
-		cmp eax, 5
-		je STATE_5_1
-		cmp eax, 6
-		je STATE_6_1
-		cmp eax, 7
-		je STATE_7_1
-		cmp eax, 8
-		je STATE_8_1
-		cmp eax, 9
-		je STATE_9_1
-		cmp eax, 10
-		je STATE_10_1
-		cmp eax, 11
-		je STATE_11_1
-		cmp eax, 12
-		je STATE_12_1
-		cmp eax, 13
-		je STATE_13_1
-		cmp eax, 14
-		je STATE_14_1
-		jmp CONTINUE
-
-	STATE_1_1:
-		mov eax, 8
-		jmp CONTINUE
-	STATE_2_1:
-		mov eax, 5
-		jmp CONTINUE
-	STATE_3_1:
-		mov eax, 6
-		jmp CONTINUE
-	STATE_4_1:
-		mov eax, 7
-		jmp CONTINUE
-	STATE_5_1:
-		mov eax, 2
-		jmp CONTINUE
-	STATE_6_1:
-		mov eax, 3
-		jmp CONTINUE
-	STATE_7_1:
-		mov eax, 4
-		jmp CONTINUE
-	STATE_8_1:
-		mov eax, 1
-		jmp CONTINUE
-	STATE_9_1:
-		mov eax, 12
-		jmp CONTINUE
-	STATE_10_1:
-		mov eax, 13
-		jmp CONTINUE
-	STATE_11_1:
-		mov eax, 14
-		jmp CONTINUE
-	STATE_12_1:
-		mov eax, 9
-		jmp CONTINUE
-	STATE_13_1:
-		mov eax, 10
-		jmp CONTINUE
-	STATE_14_1:
-		mov eax, 11
-		jmp CONTINUE
-
-	PATH_2:    ; ¦pªG¬O?¦V¥k²¾
-		mov eax, [ebp+8]
-		cmp eax, 1
-		je STATE_1_2
-		cmp eax, 2
-		je STATE_2_2
-		cmp eax, 3
-		je STATE_3_2
-		cmp eax, 4
-		je STATE_4_2
-		cmp eax, 5
-		je STATE_5_2
-		cmp eax, 6
-		je STATE_6_2
-		cmp eax, 7
-		je STATE_7_2
-		cmp eax, 8
-		je STATE_8_2
-		cmp eax, 9
-		je STATE_9_2
-		cmp eax, 10
-		je STATE_10_2
-		cmp eax, 11
-		je STATE_11_2
-		cmp eax, 12
-		je STATE_12_2
-		cmp eax, 13
-		je STATE_13_2
-		cmp eax, 14
-		je STATE_14_2
-		jmp CONTINUE
-
-	STATE_1_2:
-		mov eax, 9
-		jmp CONTINUE
-	STATE_2_2:
-		mov eax, 10
-		jmp CONTINUE
-	STATE_3_2:
-		mov eax, 11
-		jmp CONTINUE
-	STATE_4_2:
-		mov eax, 11
-		jmp CONTINUE
-	STATE_5_2:
-		mov eax, 8
-		jmp CONTINUE
-	STATE_6_2:
-		mov eax, 9
-		jmp CONTINUE
-	STATE_7_2:
-		mov eax, 13
-		jmp CONTINUE
-	STATE_8_2:
-		mov eax, 2
-		jmp CONTINUE
-	STATE_9_2:
-		mov eax, 3
-		jmp CONTINUE
-	STATE_10_2:
-		mov eax, 4
-		jmp CONTINUE
-	STATE_11_2:
-		mov eax, 4
-		jmp CONTINUE
-	STATE_12_2:
-		mov eax, 1
-		jmp CONTINUE
-	STATE_13_2:
-		mov eax, 5
-		jmp CONTINUE
-	STATE_14_2:
-		mov eax, 6
-		jmp CONTINUE
-
-	PATH_3:    ;¦pªG¬O?¦V¥ª²¾
-		mov eax, [ebp+8]
-		cmp eax, 1
-		je STATE_1_3
-		cmp eax, 2
-		je STATE_2_3
-		cmp eax, 3
-		je STATE_3_3
-		cmp eax, 4
-		je STATE_4_3
-		cmp eax, 5
-		je STATE_5_3
-		cmp eax, 6
-		je STATE_6_3
-		cmp eax, 7
-		je STATE_7_3
-		cmp eax, 8
-		je STATE_8_3
-		cmp eax, 9
-		je STATE_9_3
-		cmp eax, 10
-		je STATE_10_3
-		cmp eax, 11
-		je STATE_11_3
-		cmp eax, 12
-		je STATE_12_3
-		cmp eax, 13
-		je STATE_13_3
-		cmp eax, 14
-		je STATE_14_3
-		jmp CONTINUE
-
-	STATE_1_3:
-		mov eax, 12
-		jmp CONTINUE
-	STATE_2_3:
-		mov eax, 8
-		jmp CONTINUE
-	STATE_3_3:
-		mov eax, 9
-		jmp CONTINUE
-	STATE_4_3:
-		mov eax, 10
-		jmp CONTINUE
-	STATE_5_3:
-		mov eax, 13
-		jmp CONTINUE
-	STATE_6_3:
-		mov eax, 14
-		jmp CONTINUE
-	STATE_7_3:
-		mov eax, 14
-		jmp CONTINUE
-	STATE_8_3:
-		mov eax, 5
-		jmp CONTINUE
-	STATE_9_3:
-		mov eax, 1
-		jmp CONTINUE
-	STATE_10_3:
-		mov eax, 2
-		jmp CONTINUE
-	STATE_11_3:
-		mov eax, 3
-		jmp CONTINUE
-	STATE_12_3:
-		mov eax, 6
-		jmp CONTINUE
-	STATE_13_3:
-		mov eax, 7
-		jmp CONTINUE
-	STATE_14_3:
-		mov eax, 7
-		jmp CONTINUE
-
-	CONTINUE:
-		mov [ebp+8], eax
-
-	pop ebp
-ret
-BALL_STATE ENDP
-
-;-----------------------------------------------------------------
-;§â²yÅÜÃC¦â(¥Ø«e¬õ¦â)
-;receives: edx,eax
-;return : µL
-SET_BALL_COLOR PROC
-;-----------------------------------------------------------------
-	push edx
-	push eax
-	
-	mov eax,11           ;§â¬õ¦âªºÅÜ¼Æ©ñ¨ìeax
-	call SetTextColor   ;call setcolor§âeaxªº­Èµ¹setcolor
-	;mov edx,OFFSET the@ §âÅÜ¼Æªº¦ì¸m©ñ¨ìedx
-	pop eax
-	push eax
-	call WriteChar
-	mov eax,2
-	call SetTextColor   ;§âset colorÅÜ¦^¶Â¦â
-	
-	pop eax
-	pop edx
-	ret 
-SET_BALL_COLOR ENDP
 
 
-;-----------------------------------------------------------------
-;rick roll ¿O¿O¿O
-;receives: edx,eax
-;return : µL
 GAME_START PROC
-;-----------------------------------------------------------------
-	loop1:
+loop1:
     
-		mov ah, 0 ;ah²M0µ¹getkeystate§PÂ_¬O§_¿é¤J
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			jmp stop1
-		.ENDIF
+    mov ah, 0 ;ahæ¸…0çµ¦getkeystateåˆ¤æ–·æ˜¯å¦è¼¸å…¥
+	INVOKE GetKeyState, VK_X
+    .IF ah
+        jmp stop1
+    .ENDIF
     
 
-		; Åã¥Ü°T®§
-		mov edx, OFFSET arr1
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr2
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr3
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr4
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr5
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr6
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr7
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr8
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr9
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr10
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr11
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr12
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr13
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr14
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr15
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr16
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr17
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr18
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr19
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr20
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr21
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr22
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr23
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr24
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr25
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr26
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr27
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
-		mov edx, OFFSET arr28
-		call WriteString
-		mov eax, 60
-		call delay
-		mov ah, 0
-		INVOKE GetKeyState, VK_X
-		.IF ah
-			 jmp stop1
-		.ENDIF
+    ; é¡¯ç¤ºè¨Šæ¯
+mov edx, OFFSET arr1
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr2
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr3
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr4
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr5
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr6
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr7
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr8
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr9
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr10
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr11
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr12
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr13
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr14
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr15
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr16
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr17
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr18
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr19
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr20
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr21
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr22
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr23
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr24
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr25
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr26
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr27
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
+mov edx, OFFSET arr28
+call WriteString
+mov eax, 60
+call delay
+mov ah, 0
+INVOKE GetKeyState, VK_X
+.IF ah
+     jmp stop1
+.ENDIF
 
-		jmp loop1
+jmp loop1
 
 stop1:
     call clrscr
+
 
     ret
 GAME_START ENDP
 
 
-END
-
+end main
