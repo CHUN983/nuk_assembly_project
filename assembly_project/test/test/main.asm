@@ -4,7 +4,7 @@ PlaySound PROTO,
         pszSound:PTR BYTE, 
         hmod:DWORD, 
         fdwSound:DWORD
-	
+
 .data	
 	SND_ALIAS    DWORD 00010000h
 	SND_RESOURCE DWORD 00040005h
@@ -15,7 +15,7 @@ PlaySound PROTO,
 .code
 main proc
 	invoke PlaySound, OFFSET gameMusic, 0, 00000008h
-
+	
 	Invoke ExitProcess,0
 main endp
 end main
