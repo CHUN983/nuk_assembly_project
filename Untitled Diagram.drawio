@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-06-12T14:55:42.464Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="zdiNfMPvIAOJo6LbOuFk" version="24.5.3" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-12T15:01:12.880Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="-Glr__XotSLUkVHNiO7_" version="24.5.3" type="github">
   <diagram name="Page-1" id="fRFBAp2FJAGGFOrt1j17">
     <mxGraphModel dx="2074" dy="1116" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -7,8 +7,11 @@
         <mxCell id="SlgMJF4G2B78e_q-rDhP-2" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;&amp;nbsp; 遊戲選單&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="489.38" y="220" width="227.5" height="288.75" as="geometry" />
         </mxCell>
+        <mxCell id="xJiju8EmI6elYY2MbiO--6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="KAFOnqnanLpudtP8_fwG-33" target="xJiju8EmI6elYY2MbiO--1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="KAFOnqnanLpudtP8_fwG-33" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;遊戲畫面&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;" parent="1" vertex="1">
-          <mxGeometry x="242.51" y="510" width="227.49" height="290" as="geometry" />
+          <mxGeometry x="242.51" y="510" width="207.49" height="290" as="geometry" />
         </mxCell>
         <mxCell id="KAFOnqnanLpudtP8_fwG-2" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;初始介面&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="242.51" y="50" width="227.5" height="170" as="geometry" />
@@ -135,6 +138,18 @@
             <mxPoint x="790" y="386" as="sourcePoint" />
             <mxPoint x="690" y="361" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="xJiju8EmI6elYY2MbiO--1" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;遊戲結算&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="489.38" y="540" width="227.49" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="xJiju8EmI6elYY2MbiO--2" value="按Enter重新開始" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="536.26" y="610" width="133.75" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="xJiju8EmI6elYY2MbiO--5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xJiju8EmI6elYY2MbiO--4" target="xJiju8EmI6elYY2MbiO--2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xJiju8EmI6elYY2MbiO--4" value="Player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="770" y="600" width="30" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
