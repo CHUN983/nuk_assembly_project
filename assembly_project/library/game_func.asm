@@ -11,7 +11,7 @@ VK_D		EQU		000000044h
 VK_X		EQU		000000058h
 VK_M		EQU		00000004Dh
 VK_ENTER	EQU		00000000Dh
-VK_SPACEBAR	EQU		000000020h
+VK_SPACE	EQU		000000020h
 
 .data
 
@@ -1896,7 +1896,7 @@ GAME_START PROC
 	loop1:
     
 		mov ah, 0 ;ah清0給getkeystate判斷是否輸入
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			jmp stop1
 		.ENDIF
@@ -1908,7 +1908,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1917,7 +1917,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1926,7 +1926,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1935,7 +1935,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1944,7 +1944,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1953,7 +1953,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1962,7 +1962,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1971,7 +1971,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1980,7 +1980,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1989,7 +1989,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -1998,7 +1998,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2007,7 +2007,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2016,7 +2016,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2025,7 +2025,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2034,7 +2034,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2043,7 +2043,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2052,7 +2052,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2061,7 +2061,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2070,7 +2070,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2079,7 +2079,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2088,7 +2088,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2097,7 +2097,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2106,7 +2106,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2115,7 +2115,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2124,7 +2124,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2133,7 +2133,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2142,7 +2142,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF
@@ -2151,7 +2151,7 @@ GAME_START PROC
 		mov eax, 60
 		call delay
 		mov ah, 0
-		INVOKE GetKeyState, VK_X
+		INVOKE GetKeyState, VK_SPACE
 		.IF ah
 			 jmp stop1
 		.ENDIF

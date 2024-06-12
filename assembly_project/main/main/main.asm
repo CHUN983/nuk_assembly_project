@@ -195,11 +195,7 @@ main PROC
 	mov edx, OFFSET GAME_START_STR 
 	call WriteString
 	homeLoop:
-		call ReadChar
-		mov inputChar, al
-		cmp inputChar, 0Dh    
-		je gamerule
-	jmp homeLoop
+		call GAME_START
 
     menu:
 	call Clrscr
