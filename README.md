@@ -18,4 +18,5 @@ git rm --cached assembly_project/main/main/Debug/main.obj
 git rm -r --cached assembly_project/main/main/Debug/main.tlog/
 git rm --cached assembly_project/main/.vs/main/v17/Browse.VC.db
 git rm --cached assembly_project/main/.vs/main/v17/DocumentLayout.json
+git rm --cached assembly_project/main/.vs/main/v17/Solution.VC.db
 ```
