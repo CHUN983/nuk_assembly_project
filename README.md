@@ -20,3 +20,8 @@ git rm --cached assembly_project/main/.vs/main/v17/Browse.VC.db
 git rm --cached assembly_project/main/.vs/main/v17/DocumentLayout.json
 git rm --cached assembly_project/main/.vs/main/v17/Solution.VC.db
 ```
+
+
+Sourse code:
+  https://ascii.co.uk/animated-art/rickroll-animated-ascii-art.html
+  https://github.com/AbdallahHemdan/FIRED-OR-TIRED
