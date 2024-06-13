@@ -204,7 +204,7 @@ main PROC
 	;Draw ground
 	homeLoop:
 	invoke PlaySound, OFFSET gameMusic, 0, 20001h
-	mov eax, 200
+	mov eax, 2000
 	call delay
 	call GAME_START
 	jmp gamerule
